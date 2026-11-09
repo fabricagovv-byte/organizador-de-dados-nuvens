@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Atlas GovTech da Amazônia</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Documento 16:9 no estilo do modelo enviado: gradiente verde floresta, destaques em lima, fotos reais com cantos arredondados, linhas finas com pontos. */
+:root{
+  --g-deep:#123F12; --g-mid:#2A6E1F; --g-light:#7FAF3C;
+  --panel:#1A4A16; --panel-line:rgba(226,242,122,.28);
+  --lime:#E2F27A; --cream:#F3F6EA; --muted:#C6D9B2; --ink-dark:#0E2B0D;
+  --f-head:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", Menlo, monospace;
+}
+@page{ size:1280px 720px; margin:0 }
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{background:var(--g-deep)}
+body{font-family:var(--f-body); color:var(--cream); -webkit-print-color-adjust:exact; print-color-adjust:exact}
+.s{width:1280px; height:720px; position:relative; overflow:hidden; page-break-after:always; break-after:page;
+   background:linear-gradient(128deg, var(--g-deep) 0%, var(--g-mid) 55%, var(--g-light) 100%); padding:56px 64px}
+.s:last-child{page-break-after:auto; break-after:auto}
+h1,h2,h3{font-family:var(--f-head); font-weight:500; letter-spacing:-.035em; line-height:.98}
+.grad{color:#F6F9EC; text-shadow:0 1px 0 rgba(0,0,0,.06)}
+h2{font-size:64px}
+h3{font-size:22px; letter-spacing:-.02em; line-height:1.1}
+.lab{font-family:var(--f-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--lime)}
+.pill{display:inline-block; border:1.5px solid var(--lime); color:var(--cream); border-radius:999px; padding:6px 18px; font-size:15px}
+.dots{position:absolute; font-family:var(--f-head); color:var(--lime); font-size:28px; letter-spacing:4px; line-height:1}
+.brand{position:absolute; left:64px; bottom:26px; font-family:var(--f-mono); font-size:11px; letter-spacing:.08em; color:var(--muted)}
+.pg{position:absolute; right:64px; bottom:26px; font-family:var(--f-mono); font-size:11px; color:var(--muted)}
+.photo{border-radius:14px; overflow:hidden; background:var(--panel)}
+.photo img{width:100%; height:100%; object-fit:cover; display:block}
+.panel{background:var(--panel); border-radius:14px; padding:20px 22px}
+.line-h{position:absolute; height:1px; background:var(--panel-line)}
+.line-v{position:absolute; width:1px; background:var(--panel-line)}
+.node{position:absolute; width:12px; height:12px; border-radius:50%; background:var(--lime); transform:translate(-50%,-50%)}
+p{font-size:15px; line-height:1.5}
+.muted{color:var(--muted)}
+ul.b{list-style:none; display:grid; gap:7px}
+ul.b li{font-size:14.5px; line-height:1.4; padding-left:16px; position:relative}
+ul.b li::before{content:""; position:absolute; left:0; top:.55em; width:6px; height:6px; border-radius:50%; background:var(--lime)}
+.num{font-family:var(--f-head); font-weight:500; letter-spacing:-.03em; font-variant-numeric:tabular-nums}
+/* cartões */
+.cards{display:grid; gap:14px}
+.card{background:var(--panel); border-radius:12px; padding:14px 16px; display:grid; gap:6px; align-content:start}
+.card .lab{font-size:10.5px}
+.card h4{font-family:var(--f-head); font-weight:500; font-size:17px; letter-spacing:-.015em; line-height:1.15}
+.card p{font-size:12.6px; line-height:1.42}
+.card b{color:var(--lime); font-weight:700}
+/* tabelas */
+table{border-collapse:collapse; width:100%; font-size:12.8px; line-height:1.35}
+th{font-family:var(--f-mono); font-weight:500; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--lime); text-align:left; padding:8px 10px; border-bottom:1px solid var(--panel-line)}
+td{padding:7px 10px; border-bottom:1px solid rgba(243,246,234,.12); vertical-align:top}
+tr:last-child td{border-bottom:0}
+td b{font-weight:700; color:var(--cream)}
+td.r{text-align:right; font-family:var(--f-mono); white-space:nowrap}
+.tag{display:inline-block; font-family:var(--f-mono); font-size:10px; padding:2px 7px; border-radius:4px; background:rgba(226,242,122,.16); color:var(--lime); white-space:nowrap}
+.tag.w{background:rgba(255,190,110,.18); color:#FFD39A}
+.flag{font-family:var(--f-mono); font-size:11px; color:var(--lime); letter-spacing:.06em}
+ol.st{list-style:none; counter-reset:k; display:grid; gap:10px}
+ol.st li{counter-increment:k; display:grid; grid-template-columns:30px 1fr; gap:10px; font-size:13.5px; line-height:1.4}
+ol.st li::before{content:counter(k); font-family:var(--f-head); font-size:22px; color:var(--lime); line-height:1}
+ol.st b{display:block; font-size:14.5px}
+.muted2{color:var(--muted); font-size:12.8px}
+</style>
+</head>
+<body>
+
+<!-- 1 CAPA -->
+<section class="s" style="padding:0; background:url(fotos-amazonia/foto-000.jpg) center/cover">
+  <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(14,50,14,.55) 0%, rgba(14,50,14,.15) 45%, rgba(14,50,14,.6) 100%)"></div>
+  <div class="dots" style="right:70px; top:52px">•••</div>
+  <p class="lab" style="position:absolute; left:64px; top:56px">Pesquisa de mercado · novembro de 2026</p>
+  <h1 class="grad" style="position:absolute; left:150px; top:96px; font-size:128px">Atlas GovTech<br><span style="padding-left:120px">da Amazônia</span></h1>
+  <span class="pill" style="position:absolute; left:270px; top:390px">Tecnologia, startups e vendas ao poder público</span>
+  <div class="panel" style="position:absolute; left:270px; top:450px; width:640px; padding:16px 22px; background:rgba(18,63,18,.82)">
+    <p style="font-size:15.5px">Problemas reais da região, startups possíveis, um app de saúde para o SUS, vendas a estados, Minas Gerais e Amapá, softwares de referência dos EUA, China e Europa e os caminhos legais para contratar.</p>
+  </div>
+</section>
+
+<!-- 2 SUMÁRIO -->
+<section class="s">
+  <div class="dots" style="right:70px; top:56px">•••</div>
+  <h2 class="grad">Sumário</h2>
+  <span class="pill" style="margin-top:18px">O que este atlas cobre</span>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:34px">
+    <div class="card"><span class="lab">01 · pág. 3</span><h4>A Amazônia em números</h4></div>
+    <div class="card"><span class="lab">02 · pág. 5</span><h4>Problemas reais × startups</h4></div>
+    <div class="card"><span class="lab">03 · pág. 7</span><h4>App Rabeta Saúde e venda ao SUS</h4></div>
+    <div class="card"><span class="lab">04 · pág. 9</span><h4>Sistemas para governos estaduais</h4></div>
+    <div class="card"><span class="lab">05 · pág. 10</span><h4>Minas Gerais: municípios e jogadas</h4></div>
+    <div class="card"><span class="lab">06 · pág. 12</span><h4>Amapá: startups e sistemas</h4></div>
+    <div class="card"><span class="lab">07 · pág. 14</span><h4>Startups e produtos TIC para o Brasil</h4></div>
+    <div class="card"><span class="lab">08 · pág. 16</span><h4>Softwares de referência: EUA, China, Europa</h4></div>
+    <div class="card"><span class="lab">09 · pág. 20</span><h4>Leis e caminhos de contratação</h4></div>
+    <div class="card"><span class="lab">10 · pág. 22</span><h4>Plano de 90 dias</h4></div>
+    <div class="card"><span class="lab">11 · pág. 23</span><h4>Fontes e créditos</h4></div>
+    <div class="card" style="background:transparent; border:1.5px solid var(--panel-line)"><span class="lab">Leitura</span><p>Valores legais de 2026. Confirme no texto oficial antes de usar em proposta.</p></div>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">02</span>
+</section>
+
+<!-- 3 PANORAMA -->
+<section class="s">
+  <h2 class="grad">A Amazônia<br>em números</h2>
+  <span class="pill" style="margin-top:18px">O gigante verde do Brasil</span>
+  <div class="photo" style="position:absolute; left:640px; top:56px; width:290px; height:560px"><img src="fotos-amazonia/foto-029.jpg" alt="Lago com palmeiras na floresta amazônica"></div>
+  <div class="line-h" style="left:0; top:330px; width:640px"></div><div class="node" style="left:640px; top:330px"></div>
+  <div style="position:absolute; left:64px; top:360px; width:540px; display:grid; grid-template-columns:1fr 1fr; gap:18px 24px">
+    <div><p class="num" style="font-size:38px; color:var(--lime)">≈ 5,0 mi km²</p><p class="muted2">Amazônia Legal, cerca de 59% do território brasileiro</p></div>
+    <div><p class="num" style="font-size:38px; color:var(--lime)">9 estados</p><p class="muted2">AC, AP, AM, PA, RO, RR, TO, MT e parte do MA; 772 municípios</p></div>
+    <div><p class="num" style="font-size:38px; color:var(--lime)">≈ 27 mi</p><p class="muted2">Habitantes, a maioria em cidades</p></div>
+    <div><p class="num" style="font-size:38px; color:var(--lime)">≈ 51%</p><p class="muted2">Da população indígena do país vive na região (Censo 2022)</p></div>
+  </div>
+  <div class="panel" style="position:absolute; right:64px; top:56px; width:220px; height:270px">
+    <p class="lab">Desmatamento</p>
+    <p class="num" style="font-size:40px; margin-top:12px">5.796 km²</p>
+    <p class="muted2" style="margin-top:8px">PRODES 2025 (ago/24 a jul/25). Queda de 11% e menor taxa em 11 anos.</p>
+  </div>
+  <div class="panel" style="position:absolute; right:64px; top:346px; width:220px; height:270px">
+    <p class="lab">Rio Amazonas</p>
+    <p class="num" style="font-size:40px; margin-top:12px">≈ 20%</p>
+    <p class="muted2" style="margin-top:8px">De toda a água doce que chega aos oceanos sai pela sua foz. Mais de mil afluentes.</p>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">03</span>
+</section>
+
+<!-- 4 POPULAÇÃO + CONTEXTO -->
+<section class="s">
+  <div class="photo" style="position:absolute; left:64px; top:56px; width:250px; height:330px"><img src="fotos-amazonia/foto-011.jpg" alt="Árvore às margens de um rio amazônico"></div>
+  <div style="position:absolute; left:64px; top:410px; width:520px">
+    <p class="lab">População por estado · Censo 2022</p>
+  </div>
+  <div style="position:absolute; left:64px; top:440px; width:520px; display:grid; gap:7px" id="bars">
+    <!-- barras em escala: PA = 100% -->
+  </div>
+  <h2 class="grad" style="position:absolute; left:350px; top:56px; font-size:58px">O que define<br>a região hoje</h2>
+  <div style="position:absolute; left:350px; top:200px; width:250px"><span class="pill">Desafios e vantagens</span></div>
+  <div class="panel" style="position:absolute; left:640px; top:200px; width:576px; height:416px">
+    <ul class="b" style="gap:12px">
+      <li><b>Distância medida em dias de barco.</b> <span class="muted">Consulta, vacina ou documento podem exigir viagens de 1 a 5 dias.</span></li>
+      <li><b>Secas e cheias extremas.</b> <span class="muted">Em outubro de 2024 o Rio Negro chegou a 12,11 m em Manaus, o menor nível já medido.</span></li>
+      <li><b>Internet pelo fundo dos rios.</b> <span class="muted">O programa Norte Conectado instala cabos de fibra no leito dos rios. Fora deles, só satélite.</span></li>
+      <li><b>Energia isolada.</b> <span class="muted">Centenas de localidades ainda dependem de geradores a diesel.</span></li>
+      <li><b>Economia.</b> <span class="muted">Zona Franca de Manaus, agronegócio, mineração e bioeconomia (açaí, castanha, cacau, pescado).</span></li>
+      <li><b>Vitrine mundial.</b> <span class="muted">Belém sediou a COP30 em 2025. Há fundos internacionais para clima, floresta e tecnologia.</span></li>
+    </ul>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">04</span>
+</section>
+
+<!-- 5 PROBLEMAS 1 -->
+<section class="s">
+  <h2 class="grad" style="font-size:56px">Problemas reais<br>× startups</h2>
+  <span class="pill" style="margin-top:14px">Problema, solução e quem compra · 1 de 2</span>
+  <div class="photo" style="position:absolute; right:64px; top:56px; width:300px; height:200px"><img src="fotos-amazonia/foto-018.jpg" alt="Canoa navegando em igarapé na floresta"></div>
+  <div class="cards" style="position:absolute; left:64px; right:64px; top:290px; grid-template-columns:repeat(3,1fr)">
+    <div class="card"><span class="lab">Saúde</span><h4>Ribeirinhos sem atendimento</h4><p>Poucos médicos, comunidades a dias da sede, malária e mercúrio do garimpo. <b>Startup:</b> app offline para agentes de saúde (pág. 7). <b>Compra:</b> secretarias de saúde, DSEIs.</p></div>
+    <div class="card"><span class="lab">Saúde indígena</span><h4>Remédio que não chega na aldeia</h4><p>Estoque em papel e perdas por validade. <b>Startup:</b> estoque e logística offline de polos-base. <b>Compra:</b> Ministério da Saúde (SESAI), DSEIs.</p></div>
+    <div class="card"><span class="lab">Educação</span><h4>Escola ribeirinha sem internet</h4><p>Turma multisseriada e frequência em papel. <b>Startup:</b> "escola na caixa" com Wi-Fi local e conteúdo offline. <b>Compra:</b> secretarias de educação (FUNDEB, PNATE).</p></div>
+    <div class="card"><span class="lab">Transporte fluvial</span><h4>Barcos sem lista de passageiros</h4><p>Superlotação e naufrágios. <b>Startup:</b> bilhete digital com manifesto, Pix e rastreio. <b>Compra:</b> agências reguladoras, prefeituras.</p></div>
+    <div class="card"><span class="lab">Meio ambiente</span><h4>Alerta de desmatamento sem resposta</h4><p>O município recebe o alerta e não age. <b>Startup:</b> painel com fluxo de vistoria e foto georreferenciada. <b>Compra:</b> secretarias de meio ambiente.</p></div>
+    <div class="card"><span class="lab">Terra</span><h4>Ninguém sabe de quem é o terreno</h4><p>Posses sem documento. <b>Startup:</b> REURB digital com drone e cadastro social. <b>Compra:</b> institutos de terras e prefeituras.</p></div>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">05</span>
+</section>
+
+<!-- 6 PROBLEMAS 2 -->
+<section class="s">
+  <div class="photo" style="position:absolute; left:64px; top:56px; width:360px; height:230px"><img src="fotos-amazonia/foto-034.jpg" alt="Indígenas com cocares dentro de um rio"></div>
+  <h2 class="grad" style="position:absolute; left:470px; top:60px; font-size:56px">Mais seis<br>oportunidades</h2>
+  <div style="position:absolute; left:470px; top:200px"><span class="pill">Problema, solução e quem compra · 2 de 2</span></div>
+  <div class="cards" style="position:absolute; left:64px; right:64px; top:310px; grid-template-columns:repeat(3,1fr)">
+    <div class="card"><span class="lab">Defesa civil</span><h4>Cidades isoladas pela seca ou cheia</h4><p><b>Startup:</b> sensores de nível de rio, previsão e alertas por SMS e WhatsApp, controle de doações. <b>Compra:</b> defesas civis.</p></div>
+    <div class="card"><span class="lab">Energia</span><h4>Diesel caro em comunidade isolada</h4><p><b>Startup:</b> monitoramento remoto de miniusinas solares e energia pré-paga. <b>Compra:</b> concessionárias, programas federais.</p></div>
+    <div class="card"><span class="lab">Bioeconomia</span><h4>Açaí e castanha sem acesso a mercado</h4><p><b>Startup:</b> rastreabilidade do lote e venda direta para a merenda (PNAE: mínimo de 30% da agricultura familiar). <b>Compra:</b> cooperativas, prefeituras.</p></div>
+    <div class="card"><span class="lab">Gestão municipal</span><h4>Prefeitura que não arrecada</h4><p><b>Startup:</b> recadastramento por imagem aérea e IA, IPTU e nota fiscal no padrão nacional. Se paga com a receita nova.</p></div>
+    <div class="card"><span class="lab">Cidadania</span><h4>Documento a três dias de viagem</h4><p><b>Startup:</b> kit de atendimento itinerante em barco, com biometria e Cadastro Único offline. <b>Compra:</b> assistência social, tribunais.</p></div>
+    <div class="card"><span class="lab">Segurança</span><h4>Rios usados por crime e garimpo</h4><p><b>Startup:</b> inteligência que cruza satélite, registro de barcos e ocorrências. <b>Compra:</b> segurança pública, órgãos ambientais.</p></div>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">06</span>
+</section>
+
+<!-- 7 RABETA 1 -->
+<section class="s">
+  <div class="dots" style="left:64px; top:56px">•••</div>
+  <p class="lab" style="position:absolute; left:64px; top:100px">Ideia principal</p>
+  <h2 class="grad" style="position:absolute; left:64px; top:126px; font-size:72px">Rabeta<br>Saúde</h2>
+  <div style="position:absolute; left:64px; top:290px; width:330px">
+    <span class="pill">A UBS no bolso do agente</span>
+    <p class="muted" style="margin-top:16px">Rabeta é o motor de popa que leva o ribeirinho a todo lugar. O app funciona sem internet, roda em celular barato e envia os dados quando acha sinal.</p>
+  </div>
+  <div class="photo" style="position:absolute; left:430px; top:56px; width:300px; height:420px"><img src="fotos-amazonia/foto-006.jpg" alt="Árvores em floresta alagada"></div>
+  <div class="line-v" style="left:580px; top:476px; height:244px"></div><div class="node" style="left:580px; top:560px"></div>
+  <div style="position:absolute; left:64px; top:500px; width:480px">
+    <p class="lab">Como o dado viaja</p>
+    <p style="margin-top:8px; font-family:var(--f-mono); font-size:12.5px; line-height:1.7">Celular offline → fila de envio → Wi-Fi da UBS ou satélite → nuvem do município → e-SUS APS e RNDS</p>
+    <p class="muted2" style="margin-top:6px">Android 8+, SQLite local, padrão FHIR, criptografia e registro de acesso (LGPD). Telessaúde pela Lei 14.510/2022.</p>
+  </div>
+  <div class="panel" style="position:absolute; left:770px; top:56px; width:446px; height:560px">
+    <p class="lab">Funções</p>
+    <ul class="b" style="margin-top:14px; gap:13px">
+      <li><b>Visita domiciliar offline</b><br><span class="muted">Cadastro de famílias no padrão do e-SUS APS.</span></li>
+      <li><b>Teleconsulta assíncrona</b><br><span class="muted">Foto, áudio e sinais vitais; menos de 100 KB por caso.</span></li>
+      <li><b>Malária com foto</b><br><span class="muted">Leitura assistida do teste rápido e notificação pronta.</span></li>
+      <li><b>Gestantes e vacinas</b><br><span class="muted">Lista de faltosos com alerta para a próxima viagem.</span></li>
+      <li><b>Mapa de estoque</b><br><span class="muted">Soro antiofídico, insulina e vacinas por UBS fluvial.</span></li>
+      <li><b>Painel do secretário</b><br><span class="muted">Indicadores que definem o repasse federal da Atenção Primária.</span></li>
+    </ul>
+  </div>
+  <span class="pg">07</span>
+</section>
+
+<!-- 8 RABETA 2 -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">Como vender ao<br>secretário de saúde</h2>
+  <div style="position:absolute; left:64px; top:190px; width:560px">
+    <ol class="st">
+      <li><div><b>O problema no município dele</b><span class="muted2">Comunidades, agentes e dias de barco, com dados públicos.</span></div></li>
+      <li><div><b>O custo de não fazer nada</b><span class="muted2">Remoções de emergência, internações evitáveis, repasse perdido.</span></div></li>
+      <li><div><b>A demonstração</b><span class="muted2">Tire o celular do modo avião e mostre os dados chegando.</span></div></li>
+      <li><div><b>O que muda em 90 dias</b><span class="muted2">Cadastro, pré-natal em dia, vacinas recuperadas.</span></div></li>
+      <li><div><b>Segurança e lei</b><span class="muted2">LGPD, telessaúde regulamentada, integração com o SUS.</span></div></li>
+      <li><div><b>Preço e contratação</b><span class="muted2">Valor anual, caminho legal e fonte do recurso.</span></div></li>
+      <li><div><b>Prova social</b><span class="muted2">Primeiro piloto, depoimento do agente, antes e depois.</span></div></li>
+      <li><div><b>Próximo passo</b><span class="muted2">Termo de cooperação para piloto ou abertura do processo.</span></div></li>
+    </ol>
+  </div>
+  <div style="position:absolute; left:680px; top:56px; width:536px; display:grid; grid-template-columns:1fr 1fr; gap:14px">
+    <div class="panel"><p class="lab">Implantação</p><p class="num" style="font-size:40px; color:var(--lime); margin-top:6px">R$ 12 mil</p><p class="muted2">Valor único, município pequeno</p></div>
+    <div class="panel"><p class="lab">Licença</p><p class="num" style="font-size:40px; color:var(--lime); margin-top:6px">R$ 35</p><p class="muted2">Por agente de saúde por mês</p></div>
+  </div>
+  <div class="panel" style="position:absolute; left:680px; top:222px; width:536px; background:transparent; border:1.5px solid var(--panel-line)">
+    <p>Exemplo: 100 agentes = R$ 42 mil por ano. Com a implantação, o 1º ano soma <b style="color:var(--lime)">R$ 54 mil</b>, abaixo do limite de dispensa de 2026 (R$ 65.492,11). O contrato pode sair em semanas.</p>
+  </div>
+  <div class="panel" style="position:absolute; left:680px; top:368px; width:536px; height:248px">
+    <p class="lab">De onde vem o dinheiro do comprador</p>
+    <ul class="b" style="margin-top:12px; gap:10px">
+      <li><b>Repasse federal da Atenção Primária</b> <span class="muted">sobe quando os indicadores melhoram.</span></li>
+      <li><b>Emendas parlamentares</b> <span class="muted">metade das emendas individuais vai obrigatoriamente para a saúde.</span></li>
+      <li><b>Programas de saúde digital</b> <span class="muted">do Ministério da Saúde para estados e municípios.</span></li>
+    </ul>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">08</span>
+</section>
+
+<!-- 9 ESTADO -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">Sistemas para<br>governos estaduais</h2>
+  <div class="panel" style="position:absolute; left:64px; top:190px; width:740px; padding:12px 14px">
+    <table>
+      <thead><tr><th>Sistema</th><th>Quem compra</th><th>Por que compra</th><th>Prioridade</th></tr></thead>
+      <tbody>
+        <tr><td><b>Regulação de leitos e fila de cirurgias</b></td><td>Saúde</td><td>Pressão por fila transparente</td><td><span class="tag">Alta</span></td></tr>
+        <tr><td><b>Gestão escolar e busca ativa</b></td><td>Educação</td><td>Frequência condiciona programas federais</td><td><span class="tag">Alta</span></td></tr>
+        <tr><td><b>Licenciamento ambiental digital</b></td><td>Meio Ambiente</td><td>Fila de licenças trava investimento</td><td><span class="tag">Alta</span></td></tr>
+        <tr><td><b>Inteligência fiscal e dívida ativa</b></td><td>Fazenda, Procuradoria</td><td>Arrecadação; transição para o IBS</td><td><span class="tag">Alta</span></td></tr>
+        <tr><td><b>Atendimento por WhatsApp com IA</b></td><td>Casa Civil, ouvidorias</td><td>Lei de Governo Digital; menos filas</td><td><span class="tag">Média</span></td></tr>
+        <tr><td><b>Alertas hidrológicos</b></td><td>Defesa Civil</td><td>Secas e cheias recorrentes</td><td><span class="tag">Média</span></td></tr>
+        <tr><td><b>Gestão de frota e combustível</b></td><td>Administração</td><td>Economia rápida de medir</td><td><span class="tag">Média</span></td></tr>
+        <tr><td><b>Cibersegurança</b></td><td>Empresa estadual de TI</td><td>Ransomware em órgãos públicos</td><td><span class="tag">Média</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel" style="position:absolute; left:830px; top:56px; width:386px; height:290px">
+    <p class="lab">Atalho</p>
+    <p style="margin-top:10px; font-size:14px">Cada estado tem sua empresa pública de TI: Prodemge (MG), PRODAP (AP), PRODEPA (PA), PRODAM (AM). O governo pode contratá-la diretamente. Ser parceiro tecnológico dela abre portas.</p>
+  </div>
+  <div class="panel" style="position:absolute; left:830px; top:362px; width:386px; height:254px; background:var(--lime); color:var(--ink-dark)">
+    <p class="lab" style="color:var(--ink-dark)">Momento certo</p>
+    <p class="num" style="font-size:30px; margin-top:8px; line-height:1.05">Nov e dez de 2026</p>
+    <p style="margin-top:10px; font-size:14px">Os governadores eleitos em outubro tomam posse em janeiro de 2027. Apresente soluções agora às equipes de transição.</p>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">09</span>
+</section>
+
+<!-- 10 MINAS 1 -->
+<section class="s">
+  <h2 class="grad" style="font-size:56px">Minas Gerais</h2>
+  <span class="pill" style="margin-top:14px">853 municípios · 20,5 milhões de habitantes</span>
+  <div class="panel" style="position:absolute; left:64px; top:200px; width:470px; padding:10px 14px">
+    <table>
+      <thead><tr><th>Município</th><th style="text-align:right">Habitantes</th><th>Abordagem</th></tr></thead>
+      <tbody>
+        <tr><td>Belo Horizonte</td><td class="r">2,32 mi</td><td>Edital ou inovação aberta</td></tr>
+        <tr><td>Uberlândia</td><td class="r">713 mil</td><td>Caso de referência</td></tr>
+        <tr><td>Contagem</td><td class="r">622 mil</td><td>Saúde e educação</td></tr>
+        <tr><td>Juiz de Fora</td><td class="r">541 mil</td><td>Polo da Zona da Mata</td></tr>
+        <tr><td>Montes Claros</td><td class="r">414 mil</td><td>Saúde regional</td></tr>
+        <tr><td>Betim</td><td class="r">412 mil</td><td>Receita industrial</td></tr>
+        <tr><td>Uberaba</td><td class="r">338 mil</td><td>Gestão fiscal</td></tr>
+        <tr><td>Ribeirão das Neves</td><td class="r">330 mil</td><td>Demanda social</td></tr>
+        <tr><td>Gov. Valadares</td><td class="r">257 mil</td><td>Vale do Rio Doce</td></tr>
+        <tr><td>Divinópolis · Ipatinga · Sete Lagoas</td><td class="r">≈ 230 mil</td><td>Decisão rápida</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel" style="position:absolute; left:560px; top:56px; width:656px; height:560px">
+    <p class="lab">O que vender às prefeituras mineiras</p>
+    <ul class="b" style="margin-top:14px; gap:12px">
+      <li><b>Nota fiscal nacional e reforma tributária.</b> <span class="muted">O ISS vira IBS até 2033; IPTU e ITBI ganham peso.</span></li>
+      <li><b>Recadastramento imobiliário por drone e IA.</b> <span class="muted">Aumenta o IPTU e se paga.</span></li>
+      <li><b>Saúde: fila, prontuário e telessaúde.</b> <span class="muted">Consórcios intermunicipais compram por dezenas de cidades.</span></li>
+      <li><b>Municípios mineradores.</b> <span class="muted">Quem recebe royalties da mineração (CFEM) tem caixa: auditoria dos repasses, barragens e defesa civil.</span></li>
+      <li><b>Atendimento digital com login gov.br.</b> <span class="muted">Portal, protocolo, assinatura e WhatsApp.</span></li>
+      <li><b>Kit de conformidade para municípios pequenos.</b> <span class="muted">PNCP, transparência e LGPD. Cerca de 3 em cada 4 municípios mineiros têm até 20 mil habitantes, e o prazo especial deles na Lei 14.133 termina em <b style="color:var(--lime)">1º de abril de 2027</b>.</span></li>
+    </ul>
+  </div>
+  <span class="brand">IBGE, CENSO 2022, VALORES ARREDONDADOS</span><span class="pg">10</span>
+</section>
+
+<!-- 11 MINAS 2 -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">Jogadas legais para<br>ganhar contratos em Minas</h2>
+  <div style="position:absolute; left:64px; right:64px; top:200px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px">
+    <div class="card" style="padding:18px"><span class="lab">1 · Cadastro</span><h4>Portal de Compras MG e consórcios</h4><p>Cadastro de fornecedores (CAGEF) e certidões em dia evitam desclassificação por documento.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">2 · Referência</span><h4>Primeiro contrato numa cidade média</h4><p>O atestado de capacidade técnica desse contrato abre as próximas licitações.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">3 · Escala</span><h4>Registro de preços em consórcio</h4><p>Outros órgãos aderem à ata: até 50% por órgão e até o dobro do total registrado.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">4 · Planejamento</span><h4>Manifestação de Interesse só para startups</h4><p>O art. 81, §4º da Lei 14.133 permite restringir o procedimento a startups.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">5 · Relacionamento</span><h4>Associação Mineira de Municípios</h4><p>O congresso anual reúne prefeitos do estado inteiro.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">6 · Ecossistema</span><h4>BH e San Pedro Valley</h4><p>Comunidade de startups, FAPEMIG e programas estaduais de inovação.</p></div>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">11</span>
+</section>
+
+<!-- 12 AMAPÁ 1 -->
+<section class="s">
+  <div class="photo" style="position:absolute; left:64px; top:56px; width:330px; height:250px"><img src="fotos-amazonia/foto-039.jpg" alt="Sapo amarelo sobre tronco"></div>
+  <h2 class="grad" style="position:absolute; left:430px; top:60px; font-size:72px">Amapá</h2>
+  <div style="position:absolute; left:430px; top:150px; width:420px"><span class="pill">O estado mais preservado do Brasil</span><p class="muted" style="margin-top:14px">Sem ligação rodoviária com o resto do país, com fronteira com a União Europeia (Guiana Francesa) e com a nova fronteira do petróleo na costa.</p></div>
+  <div style="position:absolute; right:64px; top:56px; width:330px; display:grid; grid-template-columns:1fr 1fr; gap:12px">
+    <div class="panel" style="padding:14px"><p class="num" style="font-size:32px; color:var(--lime)">16</p><p class="muted2">municípios</p></div>
+    <div class="panel" style="padding:14px"><p class="num" style="font-size:32px; color:var(--lime)">734 mil</p><p class="muted2">habitantes</p></div>
+    <div class="panel" style="padding:14px"><p class="num" style="font-size:32px; color:var(--lime)">≈ 70%</p><p class="muted2">em áreas protegidas e terras indígenas</p></div>
+    <div class="panel" style="padding:14px"><p class="num" style="font-size:32px; color:var(--lime)">22 dias</p><p class="muted2">de apagão em novembro de 2020</p></div>
+  </div>
+  <div class="cards" style="position:absolute; left:64px; right:64px; top:340px; grid-template-columns:repeat(3,1fr)">
+    <div class="card"><span class="lab">Petróleo · Margem Equatorial</span><h4>Fornecedor local para a nova indústria</h4><p>Em out/2025 o IBAMA autorizou a Petrobras a perfurar na Foz do Amazonas. <b>Startup:</b> cadastro e qualificação de fornecedores e mão de obra local; monitoramento de manguezais e derrames.</p></div>
+    <div class="card"><span class="lab">Açaí e vigilância sanitária</span><h4>Açaí seguro contra a doença de Chagas</h4><p>Surtos de Chagas por açaí contaminado ocorrem quando falta branqueamento. <b>Startup:</b> certificação digital de batedores e selo com QR Code. <b>Compra:</b> vigilância sanitária.</p></div>
+    <div class="card"><span class="lab">Cidade</span><h4>Áreas de ressaca de Macapá</h4><p>Áreas alagáveis com palafitas, sem saneamento nem cadastro. <b>Startup:</b> mapeamento por drone, cadastro social e REURB. <b>Compra:</b> Macapá, Santana, governo do estado.</p></div>
+  </div>
+  <span class="brand">IBGE, CENSO 2022</span><span class="pg">12</span>
+</section>
+
+<!-- 13 AMAPÁ 2 -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">Mais sistemas<br>para o Amapá</h2>
+  <div class="photo" style="position:absolute; right:64px; top:56px; width:220px; height:330px"><img src="fotos-amazonia/foto-040.jpg" alt="Onça-pintada deitada em um galho"></div>
+  <div class="cards" style="position:absolute; left:64px; top:200px; width:850px; grid-template-columns:repeat(3,1fr)">
+    <div class="card"><span class="lab">Energia</span><h4>Nunca mais um apagão às cegas</h4><p><b>Startup:</b> monitoramento de geradores, nobreaks e combustível em hospitais, escolas e centros de dados. <b>Compra:</b> saúde, defesa civil, PRODAP.</p></div>
+    <div class="card"><span class="lab">Fronteira · Oiapoque</span><h4>Saúde binacional</h4><p><b>Startup:</b> prontuário de bolso em português e francês para a fronteira e para os povos Karipuna, Galibi e Palikur. <b>Compra:</b> Oiapoque, estado, saúde indígena.</p></div>
+    <div class="card"><span class="lab">Pesca</span><h4>Pescador sem registro</h4><p><b>Startup:</b> registro digital do pescador e do desembarque, com rastreio do pescado. <b>Compra:</b> secretaria de pesca, colônias, prefeituras.</p></div>
+  </div>
+  <div class="panel" style="position:absolute; left:64px; top:440px; width:1152px; height:176px; background:var(--lime); color:var(--ink-dark)">
+    <p class="lab" style="color:var(--ink-dark)">Como entrar no Amapá</p>
+    <p style="margin-top:10px; font-size:15px; max-width:1060px">Parcerias com UNIFAP, IFAP, UEAP e IEPA dão base técnica e acesso aos editais de inovação da FAPEAP e do Sebrae. A PRODAP é o canal para sistemas do governo. Como quase todos os 16 municípios são pequenos, um "kit prefeitura" de conformidade e gestão vendido para todos de uma vez é a entrada mais rápida.</p>
+  </div>
+  <span class="pg" style="color:var(--ink-dark)">13</span>
+</section>
+
+<!-- 14 BRASIL STARTUPS -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">Startups para vender<br>a órgãos públicos do Brasil</h2>
+  <p class="muted" style="position:absolute; right:64px; top:70px; width:360px">5.570 municípios, 27 estados e centenas de órgãos federais compram pela mesma lei. Quem resolve uma exigência da Lei 14.133 vende em qualquer lugar.</p>
+  <div class="panel" style="position:absolute; left:64px; right:64px; top:200px; padding:10px 14px">
+    <table>
+      <thead><tr><th>Startup</th><th>Dor que resolve</th><th>Comprador</th><th>Modelo</th></tr></thead>
+      <tbody>
+        <tr><td><b>IA para Estudo Técnico Preliminar e Termo de Referência</b></td><td>Documentos obrigatórios que poucos servidores dominam</td><td>Qualquer órgão</td><td>Assinatura</td></tr>
+        <tr><td><b>Pesquisa de preços automática</b></td><td>Exigida pela lei; os dados estão no PNCP</td><td>Setores de compras</td><td>Assinatura</td></tr>
+        <tr><td><b>App do fiscal de contrato</b></td><td>Contrato sem fiscalização gera apontamento do tribunal de contas</td><td>Todo órgão</td><td>Por usuário</td></tr>
+        <tr><td><b>Dívida ativa com protesto e acordo online</b></td><td>Créditos parados</td><td>Prefeituras, procuradorias</td><td>Mensal + desempenho</td></tr>
+        <tr><td><b>Atendimento por WhatsApp com IA</b></td><td>Filas e telefone sem resposta</td><td>Prefeituras, estados</td><td>Por conversa</td></tr>
+        <tr><td><b>Zeladoria pelo cidadão</b></td><td>Buraco, lâmpada e lixo sem fluxo</td><td>Prefeituras</td><td>Assinatura</td></tr>
+        <tr><td><b>LGPD como serviço</b></td><td>Município sem encarregado de dados</td><td>Prefeituras, câmaras</td><td>Mensal</td></tr>
+        <tr><td><b>Cibersegurança municipal</b></td><td>Ransomware paralisa prefeituras</td><td>Prefeituras, autarquias</td><td>Mensal</td></tr>
+        <tr><td><b>Fila de saúde transparente e telemetria de frota</b></td><td>Cidadão sem posição na fila; desvio de combustível</td><td>Saúde; todo órgão com frota</td><td>Assinatura</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">14</span>
+</section>
+
+<!-- 15 TIC -->
+<section class="s">
+  <div class="photo" style="position:absolute; left:64px; top:56px; width:420px; height:560px"><img src="fotos-amazonia/foto-043.jpg" alt="Cachoeiras cercadas de floresta"></div>
+  <h2 class="grad" style="position:absolute; left:530px; top:60px; font-size:56px">Produtos TIC que o<br>governo compra todo ano</h2>
+  <div style="position:absolute; left:530px; top:210px; width:686px; display:grid; grid-template-columns:1fr 1fr; gap:14px">
+    <div class="card" style="padding:18px"><span class="lab">Infraestrutura</span><p style="font-size:14px">Link de internet e SD-WAN, Wi-Fi público em praças e escolas, nuvem e data center, backup, certificados digitais.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">Equipamentos</span><p style="font-size:14px">Tablets para agentes de saúde, sala de aula conectada, totens de autoatendimento, câmeras com leitura de placas, drones.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">Internet das coisas</span><p style="font-size:14px">Sensores de nível de rio e de qualidade do ar, iluminação pública inteligente, medidores de água e energia.</p></div>
+    <div class="card" style="padding:18px"><span class="lab">Serviços</span><p style="font-size:14px">Suporte técnico, fábrica de software, ciência de dados e painéis, treinamento de servidores, segurança da informação.</p></div>
+  </div>
+  <div class="panel" style="position:absolute; left:530px; top:500px; width:686px; background:transparent; border:1.5px solid var(--panel-line)">
+    <p style="font-size:14px">Produtos comuns costumam ser comprados por pregão com registro de preços. É onde uma revenda ou integradora regional ganha volume.</p>
+  </div>
+  <span class="pg">15</span>
+</section>
+
+<!-- 16 SOFTWARE EUA -->
+<section class="s">
+  <p class="flag">REFERÊNCIAS INTERNACIONAIS · 1 DE 3</p>
+  <h2 class="grad" style="font-size:56px; margin-top:10px">Softwares americanos</h2>
+  <div class="photo" style="position:absolute; right:64px; top:56px; width:240px; height:130px"><img src="fotos-amazonia/foto-025.jpg" alt="Arara-azul-e-amarela em galho"></div>
+  <div class="panel" style="position:absolute; left:64px; right:64px; top:200px; padding:8px 14px">
+    <table>
+      <thead><tr><th style="width:22%">Software</th><th style="width:16%">Empresa</th><th>O que faz</th><th style="width:30%">Como usar no Brasil</th></tr></thead>
+      <tbody>
+        <tr><td><b>CommCare</b></td><td>Dimagi</td><td>App offline para agentes comunitários de saúde, usado em dezenas de países</td><td>Referência direta para o Rabeta Saúde</td></tr>
+        <tr><td><b>Community Health Toolkit</b> <span class="tag">código aberto</span></td><td>Medic</td><td>Plataforma gratuita e offline para agentes de saúde</td><td>Base pronta para acelerar o primeiro protótipo</td></tr>
+        <tr><td><b>ArcGIS</b></td><td>Esri</td><td>Geoprocessamento e cadastro territorial</td><td>Padrão em prefeituras; dá para competir com QGIS mais barato</td></tr>
+        <tr><td><b>Earth Engine</b></td><td>Google</td><td>Análise de imagens de satélite em escala; usado pelo MapBiomas</td><td>Alertas de desmatamento e mapas de uso do solo</td></tr>
+        <tr><td><b>Planet</b></td><td>Planet Labs</td><td>Imagens de satélite diárias; já fornecidas a órgãos brasileiros pelo programa Brasil MAIS</td><td>Fiscalização ambiental e segurança</td></tr>
+        <tr><td><b>Tyler (Munis e outros)</b></td><td>Tyler Technologies</td><td>Sistemas de gestão para governos locais: finanças, tributos, tribunais</td><td>Modelo de negócio de "ERP municipal" a copiar</td></tr>
+        <tr><td><b>Accela</b></td><td>Accela</td><td>Alvarás e licenciamento online</td><td>Referência para licenciamento ambiental digital</td></tr>
+        <tr><td><b>Foundry</b></td><td>Palantir</td><td>Integração de dados de governo; contrato com o sistema de saúde britânico</td><td>Referência de painel estadual (caro)</td></tr>
+        <tr><td><b>Zipline</b></td><td>Zipline</td><td>Drones que entregam remédios e sangue</td><td>Logística de saúde em comunidades isoladas</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">16</span>
+</section>
+
+<!-- 17 SOFTWARE CHINA -->
+<section class="s">
+  <p class="flag">REFERÊNCIAS INTERNACIONAIS · 2 DE 3</p>
+  <h2 class="grad" style="font-size:56px; margin-top:10px">Softwares chineses</h2>
+  <div class="panel" style="position:absolute; left:64px; right:64px; top:200px; padding:8px 14px">
+    <table>
+      <thead><tr><th style="width:22%">Software</th><th style="width:16%">Empresa</th><th>O que faz</th><th style="width:30%">Como usar no Brasil</th></tr></thead>
+      <tbody>
+        <tr><td><b>City Brain</b></td><td>Alibaba Cloud</td><td>IA para trânsito e operação urbana, nascida em Hangzhou</td><td>Modelo de centro de operações municipal</td></tr>
+        <tr><td><b>Zheliban</b></td><td>Governo de Zhejiang</td><td>App único de serviços públicos da reforma "ir no máximo uma vez"</td><td>Modelo de super-app municipal via WhatsApp</td></tr>
+        <tr><td><b>RuralStar</b></td><td>Huawei</td><td>Estações de celular baratas e solares para áreas remotas</td><td>Conectividade de comunidades ribeirinhas</td></tr>
+        <tr><td><b>Intelligent Operation Center</b></td><td>Huawei</td><td>Centro integrado de cidade inteligente</td><td>Referência para salas de situação estaduais</td></tr>
+        <tr><td><b>DJI Terra + drones</b></td><td>DJI</td><td>Mapeamento 3D e ortofotos a partir de drones</td><td>Recadastramento imobiliário e REURB</td></tr>
+        <tr><td><b>Smart Doctor Assistant</b></td><td>iFlytek</td><td>IA de apoio ao diagnóstico em clínicas rurais</td><td>Referência para triagem por IA no app de saúde</td></tr>
+        <tr><td><b>Ping An Good Doctor</b></td><td>Ping An</td><td>Telemedicina com triagem por IA para milhões de usuários</td><td>Modelo de teleconsulta em escala</td></tr>
+        <tr><td><b>CBERS</b> <span class="tag">imagens grátis</span></td><td>China e Brasil (INPE)</td><td>Satélites sino-brasileiros; imagens usadas pelo INPE no monitoramento</td><td>Dados gratuitos para produtos ambientais</td></tr>
+        <tr><td><b>Câmeras Hikvision e Dahua</b> <span class="tag w">atenção</span></td><td>Hikvision, Dahua</td><td>Videomonitoramento e reconhecimento</td><td>Restrições nos EUA e na Europa; avalie risco de privacidade</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">17</span>
+</section>
+
+<!-- 18 SOFTWARE EUROPA -->
+<section class="s">
+  <p class="flag">REFERÊNCIAS INTERNACIONAIS · 3 DE 3</p>
+  <h2 class="grad" style="font-size:56px; margin-top:10px">Softwares europeus</h2>
+  <div class="panel" style="position:absolute; left:64px; right:64px; top:200px; padding:8px 14px">
+    <table>
+      <thead><tr><th style="width:22%">Software</th><th style="width:16%">Origem</th><th>O que faz</th><th style="width:30%">Como usar no Brasil</th></tr></thead>
+      <tbody>
+        <tr><td><b>DHIS2</b> <span class="tag">código aberto</span></td><td>Univ. de Oslo, Noruega</td><td>Sistema de informação em saúde usado em mais de 80 países</td><td>Painéis de indicadores de saúde</td></tr>
+        <tr><td><b>X-Road</b> <span class="tag">código aberto</span></td><td>Estônia e Finlândia</td><td>Troca segura de dados entre órgãos; base do governo digital estoniano</td><td>Interoperabilidade entre sistemas estaduais</td></tr>
+        <tr><td><b>Copernicus / Sentinel</b> <span class="tag">imagens grátis</span></td><td>União Europeia e ESA</td><td>Satélites gratuitos; o radar do Sentinel-1 enxerga através das nuvens</td><td>Monitoramento na estação chuvosa</td></tr>
+        <tr><td><b>Starling</b></td><td>Airbus</td><td>Monitora desmatamento em cadeias de fornecimento</td><td>Rastreabilidade exigida por compradores europeus</td></tr>
+        <tr><td><b>SAP para setor público</b></td><td>SAP, Alemanha</td><td>Gestão financeira e de RH de governos</td><td>Concorrente grande; atue como integrador</td></tr>
+        <tr><td><b>Decidim</b> <span class="tag">código aberto</span></td><td>Barcelona, Espanha</td><td>Participação cidadã e orçamento participativo</td><td>Escuta pública municipal</td></tr>
+        <tr><td><b>Signalen</b> <span class="tag">código aberto</span></td><td>Amsterdã, Holanda</td><td>Registro e tratamento de reclamações urbanas</td><td>Zeladoria municipal</td></tr>
+        <tr><td><b>GOV.UK Notify</b> <span class="tag">código aberto</span></td><td>Reino Unido</td><td>Envio de SMS, e-mail e cartas pelo governo</td><td>Alertas da defesa civil e avisos ao cidadão</td></tr>
+        <tr><td><b>Doctolib</b></td><td>França</td><td>Agendamento de consultas online</td><td>Agenda da UBS e do barco-hospital</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">18</span>
+</section>
+
+<!-- 19 LIÇÕES -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">O que aprender com<br>EUA, China e Europa</h2>
+  <div style="position:absolute; left:64px; right:64px; top:200px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px">
+    <div class="panel" style="height:416px"><p class="lab">Copiar</p>
+      <ul class="b" style="margin-top:14px; gap:12px">
+        <li><b>Funcionar sem internet</b> <span class="muted">(CommCare, Community Health Toolkit)</span></li>
+        <li><b>Um app para todos os serviços</b> <span class="muted">(Zheliban)</span></li>
+        <li><b>Sistemas que conversam entre si</b> <span class="muted">(X-Road)</span></li>
+        <li><b>Satélite gratuito como matéria-prima</b> <span class="muted">(Copernicus, CBERS)</span></li>
+        <li><b>Software de prefeitura como assinatura</b> <span class="muted">(Tyler)</span></li>
+      </ul></div>
+    <div class="panel" style="height:416px"><p class="lab">Cuidado</p>
+      <ul class="b" style="margin-top:14px; gap:12px">
+        <li><b>Dados fora do Brasil.</b> <span class="muted">A LGPD tem regras próprias para transferência internacional, mais sensíveis em dados de saúde.</span></li>
+        <li><b>Soberania.</b> <span class="muted">Órgãos públicos exigem cada vez mais dados em nuvem no país.</span></li>
+        <li><b>Equipamentos com restrições</b> <span class="muted">em outros países podem gerar questionamento.</span></li>
+        <li><b>Dependência de fornecedor.</b> <span class="muted">Prefira formatos abertos e contratos com saída de dados.</span></li>
+      </ul></div>
+    <div class="panel" style="height:416px; background:var(--lime); color:var(--ink-dark)"><p class="lab" style="color:var(--ink-dark)">Oportunidade</p>
+      <p style="margin-top:14px; font-size:15px">Ser o <b>integrador brasileiro</b> dessas soluções. Empresa estrangeira precisa de representante legal no país para participar de licitação.</p>
+      <p style="margin-top:14px; font-size:15px">Começar grátis com código aberto: Community Health Toolkit, DHIS2, X-Road, Decidim, Signalen, GOV.UK Notify, QGIS. O valor está em adaptar, implantar e dar suporte.</p></div>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">19</span>
+</section>
+
+<!-- 20 LEIS 1 -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">Caminhos legais<br>para fechar contrato</h2>
+  <p class="muted" style="position:absolute; right:64px; top:70px; width:380px">Valores de 2026 atualizados pelo Decreto 12.807/2025. Escolha o caminho pelo tamanho e pelo tipo do produto.</p>
+  <div class="panel" style="position:absolute; left:64px; right:64px; top:200px; padding:8px 14px">
+    <table>
+      <thead><tr><th>Caminho</th><th>Base legal</th><th>Quando usar</th><th style="text-align:right">Limite</th><th>Velocidade</th></tr></thead>
+      <tbody>
+        <tr><td><b>Dispensa por valor</b></td><td>Lei 14.133, art. 75, II</td><td>Primeiro contrato, piloto pago</td><td class="r">R$ 65.492,11/ano</td><td><span class="tag">Semanas</span></td></tr>
+        <tr><td><b>Pregão eletrônico</b></td><td>Lei 14.133</td><td>Software e serviços comuns</td><td class="r">Sem limite</td><td><span class="tag">1 a 3 meses</span></td></tr>
+        <tr><td><b>Registro de preços e adesão</b></td><td>Lei 14.133, arts. 82 a 86</td><td>Escalar para outros órgãos</td><td class="r">50% por órgão; 2× total</td><td><span class="tag">Rápida</span></td></tr>
+        <tr><td><b>Contrato de solução inovadora (CPSI)</b></td><td>LC 182/2021, arts. 12 a 15</td><td>Testar e depois fornecer sem nova licitação</td><td class="r">R$ 1,6 mi no teste</td><td><span class="tag">2 a 4 meses</span></td></tr>
+        <tr><td><b>Encomenda tecnológica</b></td><td>Lei 10.973, art. 20</td><td>Problema com risco tecnológico</td><td class="r">Sem limite fixo</td><td><span class="tag w">Meses</span></td></tr>
+        <tr><td><b>Manifestação de interesse para startups</b></td><td>Lei 14.133, art. 81, §4º</td><td>Entrar no planejamento do órgão</td><td class="r">—</td><td><span class="tag">Planejamento</span></td></tr>
+        <tr><td><b>Diálogo competitivo</b></td><td>Lei 14.133, art. 32</td><td>Órgão grande sem solução definida</td><td class="r">Sem limite</td><td><span class="tag w">Longa</span></td></tr>
+        <tr><td><b>Inexigibilidade</b></td><td>Lei 14.133, art. 74</td><td>Fornecedor exclusivo comprovado</td><td class="r">Sem limite</td><td><span class="tag w">Risco alto</span></td></tr>
+        <tr><td><b>Consórcio público</b></td><td>Lei 11.107/2005</td><td>Vários municípios de uma vez</td><td class="r">Conforme modalidade</td><td><span class="tag">Variável</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">20</span>
+</section>
+
+<!-- 21 LEIS 2 -->
+<section class="s">
+  <h2 class="grad" style="font-size:52px">Como aumentar<br>suas chances</h2>
+  <div style="position:absolute; left:64px; top:200px; width:520px">
+    <ol class="st" style="gap:13px">
+      <li><div><b>Leia o Plano de Contratações Anual</b><span class="muted2">Você descobre a demanda antes do edital.</span></div></li>
+      <li><div><b>Responda às cotações</b><span class="muted2">Seu preço vira a referência do edital.</span></div></li>
+      <li><div><b>Tenha a prova de conceito pronta</b><span class="muted2">Quem demonstra bem, vence.</span></div></li>
+      <li><div><b>Mostre a fonte do dinheiro</b><span class="muted2">SUS, FUNDEB, emenda, convênio ou arrecadação nova.</span></div></li>
+      <li><div><b>Cobre por desempenho quando fizer sentido</b><span class="muted2">O art. 144 permite remuneração ligada a metas.</span></div></li>
+      <li><div><b>Acumule atestados</b><span class="muted2">Cada contrato entregue abre o próximo.</span></div></li>
+    </ol>
+  </div>
+  <div class="panel" style="position:absolute; left:620px; top:56px; width:596px; height:250px">
+    <p class="lab">Vantagens para ME e EPP · LC 123/2006</p>
+    <ul class="b" style="margin-top:12px; gap:10px">
+      <li><b>Itens de até R$ 80 mil</b> <span class="muted">exclusivos para micro e pequenas empresas.</span></li>
+      <li><b>Empate ficto:</b> <span class="muted">até 5% acima de uma grande empresa no pregão (10% nas demais), você pode cobrir e vencer.</span></li>
+      <li><b>Cinco dias úteis</b> <span class="muted">para regularizar certidão fiscal depois de vencer.</span></li>
+    </ul>
+  </div>
+  <div class="panel" style="position:absolute; left:620px; top:322px; width:596px; height:294px; background:#3B1E14; border:1.5px solid rgba(255,190,110,.45)">
+    <p class="lab" style="color:#FFD39A">O que nunca fazer</p>
+    <ul class="b" style="margin-top:12px; gap:10px">
+      <li>Dividir uma compra em várias pequenas para caber na dispensa.</li>
+      <li>Escrever o edital com exigências que só você cumpre.</li>
+      <li>Oferecer qualquer vantagem a servidor ou político (Lei 12.846/2013 e Código Penal).</li>
+      <li>Fazer "teste grátis" sem termo formal; isso pode impedir sua participação depois.</li>
+    </ul>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">21</span>
+</section>
+
+<!-- 22 PLANO -->
+<section class="s">
+  <h2 class="grad" style="font-size:56px">Plano de 90 dias</h2>
+  <span class="pill" style="margin-top:14px">Transição dos governos e prazo de abril de 2027</span>
+  <div class="photo" style="position:absolute; right:64px; top:56px; width:220px; height:150px"><img src="fotos-amazonia/foto-046.jpg" alt="Arara comendo fruta entre folhas"></div>
+  <div class="line-h" style="left:64px; right:64px; top:250px"></div>
+  <div class="node" style="left:200px; top:250px"></div><div class="node" style="left:640px; top:250px"></div><div class="node" style="left:1080px; top:250px"></div>
+  <div style="position:absolute; left:64px; right:64px; top:280px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px">
+    <div class="panel" style="height:336px"><p class="lab">Dias 1 a 30</p><h3 style="margin-top:6px">Base pronta</h3>
+      <ul class="b" style="margin-top:14px"><li>Abrir ME ou EPP e tirar as certidões</li><li>Cadastro no Compras.gov.br, Portal de Compras MG e portais do Norte</li><li>Protótipo offline do Rabeta Saúde</li><li>Escolher 3 municípios no Amapá e 3 em Minas</li></ul></div>
+    <div class="panel" style="height:336px"><p class="lab">Dias 31 a 60</p><h3 style="margin-top:6px">Primeiras reuniões</h3>
+      <ul class="b" style="margin-top:14px"><li>Demonstração offline para secretários de saúde</li><li>Editais FAPEAP, FAPEMIG, Centelha e Sebrae</li><li>Parceria com uma universidade</li><li>Apresentar às equipes de transição</li></ul></div>
+    <div class="panel" style="height:336px"><p class="lab">Dias 61 a 90</p><h3 style="margin-top:6px">Primeiro contrato</h3>
+      <ul class="b" style="margin-top:14px"><li>Dispensa ou CPSI em um município</li><li>Medir resultados toda semana</li><li>Documentação para pregão com registro de preços</li><li>Mapear consórcios intermunicipais</li></ul></div>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA</span><span class="pg">22</span>
+</section>
+
+<!-- 23 FONTES -->
+<section class="s">
+  <div class="photo" style="position:absolute; left:64px; top:56px; width:330px; height:240px"><img src="fotos-amazonia/foto-026.jpg" alt="Bicho-preguiça pendurado em galho"></div>
+  <h2 class="grad" style="position:absolute; left:430px; top:60px; font-size:56px">Fontes e créditos</h2>
+  <div style="position:absolute; left:430px; top:140px; width:786px"><p class="muted">Este material não é parecer jurídico. Números de população vêm do Censo 2022, arredondados. Confirme valores e prazos no texto oficial.</p></div>
+  <div class="panel" style="position:absolute; left:64px; right:64px; top:320px; height:296px">
+    <ul class="b" style="gap:7px; columns:2; column-gap:40px; display:block">
+      <li style="margin-bottom:7px">INPE e Agência Gov: PRODES 2025, queda de 11,08% na Amazônia (out/2025)</li>
+      <li style="margin-bottom:7px">Decreto 12.807/2025: limites de dispensa para 2026</li>
+      <li style="margin-bottom:7px">Lei 14.133/2021: Licitações e Contratos</li>
+      <li style="margin-bottom:7px">Lei Complementar 182/2021: Marco Legal das Startups</li>
+      <li style="margin-bottom:7px">Lei Complementar 123/2006: Estatuto da Micro e Pequena Empresa</li>
+      <li style="margin-bottom:7px">Lei 10.973/2004: Lei de Inovação</li>
+      <li style="margin-bottom:7px">IBGE: Censo Demográfico 2022</li>
+      <li style="margin-bottom:7px">Portal Nacional de Contratações Públicas (pncp.gov.br)</li>
+      <li style="margin-bottom:7px">Sites oficiais de Dimagi, Medic, DHIS2, X-Road (NIIS), Copernicus, Decidim, Signalen, GOV.UK Notify, Huawei, Alibaba Cloud e INPE (CBERS)</li>
+      <li style="margin-bottom:7px">Fotos: modelo "Green Modern Amazon Rainforest Presentation" (Canva), enviado pelo usuário</li>
+    </ul>
+  </div>
+  <span class="brand">ATLAS GOVTECH DA AMAZÔNIA · NOVEMBRO DE 2026</span><span class="pg">23</span>
+</section>
+
+<script>
+(function(){
+  var d=[["PA",8.12],["MA*",6.78],["AM",3.94],["MT",3.66],["RO",1.58],["TO",1.51],["AC",0.83],["AP",0.73],["RR",0.64]];
+  var box=document.getElementById('bars'); var max=8.12;
+  d.forEach(function(r){
+    var row=document.createElement('div');
+    row.style.cssText='display:grid;grid-template-columns:40px 1fr 64px;gap:10px;align-items:center;font-size:12px';
+    var c = r[0]==='AP' ? 'var(--cream)' : 'var(--lime)';
+    row.innerHTML='<span style="font-family:var(--f-mono)">'+r[0]+'</span><span style="height:9px;background:rgba(243,246,234,.12);border-radius:2px;overflow:hidden"><span style="display:block;height:100%;width:'+(r[1]/max*100).toFixed(1)+'%;background:'+c+'"></span></span><span style="font-family:var(--f-mono);text-align:right">'+r[1].toFixed(2).replace('.',',')+' mi</span>';
+    box.appendChild(row);
+  });
+  var n=document.createElement('p'); n.className='muted2'; n.style.fontSize='11px'; n.textContent='*Estado inteiro; só parte do Maranhão integra a Amazônia Legal. Em creme, o Amapá.'; box.appendChild(n);
+})();
+</script>
+</body>
+</html>
