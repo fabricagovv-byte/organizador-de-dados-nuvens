@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atlas GovTech da Amazônia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: relatório longo em coluna única; faixa de abertura "Encontro das Águas" (Rio Negro x Solimões); índice fixo em chips; blocos por território. */
+:root{
+  --bg:#F1F4EE; --surface:#FBFCF8; --ink:#16201B; --muted:#55625A; --line:#D3DACF; --chip:#E3E9DD;
+  --negro:#2A1D15; --solimoes:#C99B5C; --hero-ink:#F6F1E8; --hero-muted:#D9CBB6;
+  --accent:#0E6A4C; --accent-soft:#D7E9DF; --accent-ink:#FFFFFF;
+  --acai:#6B2C5C; --acai-soft:#EFE0EA;
+  --warn:#9A5B00; --warn-soft:#F6E6CC;
+  --f-display:"Gloock", "Georgia", "Times New Roman", serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --s-1:.8125rem; --s0:1rem; --s1:1.125rem; --s2:1.375rem; --s3:1.75rem; --s4:2.375rem; --s5:clamp(2.6rem, 7vw, 4.6rem);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E1311; --surface:#151C19; --ink:#E6EBE5; --muted:#9BA8A0; --line:#28322E; --chip:#1D2622;
+  --negro:#21160F; --solimoes:#A57A44; --hero-ink:#F6F1E8; --hero-muted:#D3C3AC;
+  --accent:#55C495; --accent-soft:#16352A; --accent-ink:#04130C;
+  --acai:#D08ABD; --acai-soft:#35202F;
+  --warn:#E8B25A; --warn-soft:#3A2B12;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1311; --surface:#151C19; --ink:#E6EBE5; --muted:#9BA8A0; --line:#28322E; --chip:#1D2622;
+  --negro:#21160F; --solimoes:#A57A44; --hero-ink:#F6F1E8; --hero-muted:#D3C3AC;
+  --accent:#55C495; --accent-soft:#16352A; --accent-ink:#04130C;
+  --acai:#D08ABD; --acai-soft:#35202F;
+  --warn:#E8B25A; --warn-soft:#3A2B12;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:var(--s0); line-height:1.6; -webkit-font-smoothing:antialiased}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--negro)}
+a{color:var(--accent); text-underline-offset:3px}
+a:focus-visible, button:focus-visible{outline:3px solid var(--accent); outline-offset:2px; border-radius:4px}
+h1,h2,h3{font-family:var(--f-display); font-weight:400; text-wrap:balance; line-height:1.12; margin:0}
+h2{font-size:var(--s4)}
+h3{font-size:var(--s2)}
+p{margin:0}
+.wrap{max-width:68rem; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+.prose{max-width:42rem}
+.eyebrow{font-family:var(--f-mono); font-size:var(--s-1); letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Abertura */
+.hero{position:relative; background:var(--negro); color:var(--hero-ink); overflow:hidden}
+.hero svg.agua{display:block; width:100%; height:clamp(56px, 9vw, 110px)}
+.hero .wrap{position:relative; padding-block:3.5rem 2rem; display:grid; gap:1.25rem}
+.hero .eyebrow{color:var(--hero-muted)}
+.hero h1{font-size:var(--s5); max-width:14ch}
+.hero .lede{font-size:var(--s1); max-width:36rem; color:var(--hero-ink)}
+.hero .legend{font-family:var(--f-mono); font-size:var(--s-1); color:var(--hero-muted); display:flex; gap:1rem; flex-wrap:wrap}
+.hero .legend span{display:inline-flex; align-items:center; gap:.4rem}
+.hero .legend i{width:.8rem; height:.8rem; border-radius:50%; display:inline-block; border:1px solid var(--hero-muted)}
+
+/* Índice */
+nav.toc{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--bg); border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex; gap:.5rem; overflow-x:auto; padding-block:.6rem; scrollbar-width:none}
+nav.toc .wrap::-webkit-scrollbar{display:none}
+nav.toc a{flex:0 0 auto; text-decoration:none; color:var(--ink); background:var(--chip); padding:.35rem .8rem; border-radius:999px; font-size:var(--s-1); font-weight:700; white-space:nowrap}
+nav.toc a.on{background:var(--accent); color:var(--accent-ink)}
+
+/* Seções */
+section.block{padding-block:3.5rem; border-bottom:1px solid var(--line)}
+section.block > .wrap{display:grid; gap:1.75rem}
+.head{display:grid; gap:.6rem}
+.head p{color:var(--muted); font-size:var(--s1); max-width:42rem}
+
+/* Números-chave */
+.stats{display:grid; grid-template-columns:repeat(auto-fit, minmax(13rem,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+.stat{background:var(--surface); padding:1.1rem 1.2rem; display:grid; gap:.25rem; align-content:start}
+.stat b{font-family:var(--f-display); font-weight:400; font-size:var(--s3); line-height:1.1}
+.stat span{color:var(--muted); font-size:.9rem}
+
+/* Barras */
+.bars{display:grid; gap:.55rem; background:var(--surface); border:1px solid var(--line); padding:1.2rem}
+.bar{display:grid; grid-template-columns:3.2rem 1fr 4.6rem; gap:.75rem; align-items:center; font-size:.9rem}
+.bar .lab{font-family:var(--f-mono); font-weight:500}
+.bar .track{height:.85rem; background:var(--chip); border-radius:2px; overflow:hidden}
+.bar .fill{height:100%; background:var(--solimoes)}
+.bar.ap .fill{background:var(--accent)}
+.bar .v{font-family:var(--f-mono); text-align:right; font-variant-numeric:tabular-nums}
+.note{font-size:var(--s-1); color:var(--muted)}
+
+.two{display:grid; grid-template-columns:repeat(auto-fit, minmax(19rem,1fr)); gap:1.5rem; align-items:start}
+.two > *{min-width:0}
+ul.facts{list-style:none; margin:0; padding:0; display:grid; gap:.9rem}
+ul.facts li{display:grid; gap:.15rem; padding-bottom:.9rem; border-bottom:1px dashed var(--line)}
+ul.facts li:last-child{border-bottom:0; padding-bottom:0}
+ul.facts strong{font-size:1.02rem}
+ul.facts span{color:var(--muted); font-size:.95rem}
+
+/* Cartões de oportunidade */
+.cards{display:grid; grid-template-columns:repeat(auto-fill, minmax(19rem,1fr)); gap:1rem}
+.card{background:var(--surface); border:1px solid var(--line); padding:1.2rem; display:grid; gap:.75rem; align-content:start; min-width:0}
+.card .tag{font-family:var(--f-mono); font-size:var(--s-1); text-transform:uppercase; letter-spacing:.08em; color:var(--accent)}
+.card h3{font-size:1.3rem}
+.card dl{margin:0; display:grid; gap:.55rem}
+.card dt{font-family:var(--f-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.card dd{margin:0; font-size:.95rem}
+
+/* App de saúde */
+.feature{background:var(--negro); color:var(--hero-ink)}
+.feature .eyebrow{color:var(--hero-muted)}
+.feature .head p{color:var(--hero-muted)}
+.feature h2 em{font-style:normal; color:var(--solimoes)}
+.feat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(16rem,1fr)); gap:1px; background:rgba(246,241,232,.18); border:1px solid rgba(246,241,232,.18)}
+.feat-grid div{background:var(--negro); padding:1.1rem; display:grid; gap:.35rem; align-content:start}
+.feat-grid b{font-size:1.02rem}
+.feat-grid span{color:var(--hero-muted); font-size:.93rem}
+.flow{display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; font-family:var(--f-mono); font-size:.85rem}
+.flow span.n{border:1px solid rgba(246,241,232,.35); padding:.4rem .7rem; border-radius:3px}
+.flow span.a{color:var(--solimoes)}
+.pitch{display:grid; gap:0; counter-reset:slide; border-top:1px solid rgba(246,241,232,.25)}
+.pitch li{list-style:none; display:grid; grid-template-columns:3rem 1fr; gap:.75rem; padding:.85rem 0; border-bottom:1px solid rgba(246,241,232,.18)}
+.pitch li::before{counter-increment:slide; content:counter(slide, decimal-leading-zero); font-family:var(--f-mono); color:var(--solimoes); padding-top:.15rem}
+.pitch b{display:block}
+.pitch span{color:var(--hero-muted); font-size:.95rem}
+.pitch{padding:0; margin:0}
+.price{display:grid; grid-template-columns:repeat(auto-fit, minmax(14rem,1fr)); gap:1rem}
+.price div{border:1px solid rgba(246,241,232,.3); padding:1rem; display:grid; gap:.3rem}
+.price b{font-family:var(--f-display); font-weight:400; font-size:var(--s3); color:var(--solimoes)}
+.price span{color:var(--hero-muted); font-size:.92rem}
+.callout-dark{border-left:3px solid var(--solimoes); padding:.2rem 0 .2rem 1rem; color:var(--hero-ink); max-width:44rem}
+
+/* Tabelas */
+.tbl{overflow-x:auto; border:1px solid var(--line); background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:40rem; font-size:.92rem}
+th,td{text-align:left; padding:.7rem .85rem; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-family:var(--f-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:500; background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.r{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--f-mono); white-space:nowrap}
+td b{font-weight:700}
+.pill{display:inline-block; font-family:var(--f-mono); font-size:.7rem; padding:.12rem .45rem; border-radius:3px; background:var(--accent-soft); color:var(--accent); white-space:nowrap}
+.pill.acai{background:var(--acai-soft); color:var(--acai)}
+.pill.warn{background:var(--warn-soft); color:var(--warn)}
+
+/* Listas numeradas reais */
+ol.steps{margin:0; padding:0; list-style:none; counter-reset:st; display:grid; gap:1rem}
+ol.steps li{counter-increment:st; display:grid; grid-template-columns:2.4rem 1fr; gap:.8rem}
+ol.steps li::before{content:counter(st); font-family:var(--f-display); font-size:1.6rem; line-height:1; color:var(--accent)}
+ol.steps b{display:block}
+ol.steps span{color:var(--muted)}
+
+.alert{background:var(--warn-soft); border:1px solid var(--line); padding:1rem 1.2rem; display:grid; gap:.4rem}
+.alert b{color:var(--warn)}
+.donts{display:grid; gap:.5rem; margin:0; padding-left:1.1rem}
+
+.timeline{display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem,1fr)); gap:1rem}
+.phase{border-top:3px solid var(--accent); background:var(--surface); padding:1rem 1.1rem; display:grid; gap:.5rem; align-content:start}
+.phase .eyebrow{color:var(--accent)}
+.phase ul{margin:0; padding-left:1.1rem; display:grid; gap:.35rem; font-size:.95rem}
+
+.sources{font-size:.9rem; display:grid; gap:.45rem; padding-left:1.1rem; margin:0}
+footer{padding-block:2.5rem 3rem; color:var(--muted); font-size:var(--s-1)}
+@media (max-width:30rem){
+  .bar{grid-template-columns:2.6rem 1fr 4rem; gap:.5rem}
+  section.block{padding-block:2.5rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" id="topo">
+  <div class="wrap">
+    <p class="eyebrow">Pesquisa de mercado · novembro de 2026</p>
+    <h1>Atlas GovTech da Amazônia</h1>
+    <p class="lede">A região, os problemas reais de cada setor, as startups que dá para lançar, um app de saúde pronto para vender ao SUS e o caminho legal para vender ao Estado, aos municípios de Minas Gerais e ao Amapá.</p>
+    <p class="legend"><span><i style="background:var(--negro)"></i>Rio Negro</span><span><i style="background:var(--solimoes)"></i>Rio Solimões</span><span>Encontro das Águas, Manaus</span></p>
+  </div>
+  <svg class="agua" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 40 C 150 10, 300 70, 450 42 S 750 12, 900 48 S 1100 70, 1200 36 L1200 110 L0 110 Z" fill="var(--solimoes)"/>
+    <path d="M0 58 C 160 30, 320 86, 470 60 S 760 30, 910 66 S 1100 88, 1200 56" fill="none" stroke="var(--negro)" stroke-opacity=".28" stroke-width="2"/>
+    <path d="M0 78 C 170 52, 330 100, 490 80 S 770 52, 920 84 S 1100 102, 1200 76" fill="none" stroke="var(--negro)" stroke-opacity=".18" stroke-width="2"/>
+  </svg>
+</header>
+
+<nav class="toc" aria-label="Índice">
+  <div class="wrap">
+    <a href="#panorama">Amazônia</a>
+    <a href="#problemas">Problemas × startups</a>
+    <a href="#saude">App de saúde</a>
+    <a href="#estado">Vender ao Estado</a>
+    <a href="#minas">Minas Gerais</a>
+    <a href="#amapa">Amapá</a>
+    <a href="#brasil">Brasil e TIC</a>
+    <a href="#leis">Leis e contratos</a>
+    <a href="#plano">Plano 90 dias</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- 1. PANORAMA -->
+<section class="block" id="panorama">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">1 · Panorama</p>
+      <h2>Tudo o que importa saber sobre a Amazônia</h2>
+      <p>A Amazônia Legal é uma divisão administrativa criada para planejar o desenvolvimento da região. Ela cobre nove estados e é maior que a União Europeia. É ali que o Estado brasileiro tem mais dificuldade para chegar, e por isso é onde a tecnologia mais resolve.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b class="num">≈ 5,0 mi km²</b><span>Área da Amazônia Legal, cerca de 59% do território do Brasil</span></div>
+      <div class="stat"><b class="num">9 estados</b><span>AC, AP, AM, PA, RO, RR, TO, MT e parte do MA, com 772 municípios</span></div>
+      <div class="stat"><b class="num">≈ 27 mi</b><span>Habitantes, a maioria em cidades; o restante espalhado por rios e estradas de terra</span></div>
+      <div class="stat"><b class="num">5.796 km²</b><span>Desmatamento PRODES 2025 (ago/24 a jul/25), queda de 11% e menor taxa em 11 anos</span></div>
+      <div class="stat"><b class="num">≈ 20%</b><span>De toda a água doce que chega aos oceanos sai pela foz do Amazonas</span></div>
+      <div class="stat"><b class="num">≈ 51%</b><span>Da população indígena do Brasil vive na Amazônia Legal (Censo 2022)</span></div>
+    </div>
+
+    <div class="two">
+      <div style="display:grid; gap:.8rem">
+        <h3>População por estado</h3>
+        <div class="bars" role="img" aria-label="População dos estados da Amazônia Legal, Censo 2022">
+          <div class="bar"><span class="lab">PA</span><span class="track"><span class="fill" style="width:100%; display:block"></span></span><span class="v">8,12 mi</span></div>
+          <div class="bar"><span class="lab">MA*</span><span class="track"><span class="fill" style="width:83.5%; display:block"></span></span><span class="v">6,78 mi</span></div>
+          <div class="bar"><span class="lab">AM</span><span class="track"><span class="fill" style="width:48.5%; display:block"></span></span><span class="v">3,94 mi</span></div>
+          <div class="bar"><span class="lab">MT</span><span class="track"><span class="fill" style="width:45.1%; display:block"></span></span><span class="v">3,66 mi</span></div>
+          <div class="bar"><span class="lab">RO</span><span class="track"><span class="fill" style="width:19.5%; display:block"></span></span><span class="v">1,58 mi</span></div>
+          <div class="bar"><span class="lab">TO</span><span class="track"><span class="fill" style="width:18.6%; display:block"></span></span><span class="v">1,51 mi</span></div>
+          <div class="bar"><span class="lab">AC</span><span class="track"><span class="fill" style="width:10.2%; display:block"></span></span><span class="v">0,83 mi</span></div>
+          <div class="bar ap"><span class="lab">AP</span><span class="track"><span class="fill" style="width:9.0%; display:block"></span></span><span class="v">0,73 mi</span></div>
+          <div class="bar"><span class="lab">RR</span><span class="track"><span class="fill" style="width:7.8%; display:block"></span></span><span class="v">0,64 mi</span></div>
+        </div>
+        <p class="note">Fonte: IBGE, Censo 2022. *Estado inteiro; só a parte oeste do Maranhão integra a Amazônia Legal. Em verde, o Amapá, foco da seção 6.</p>
+      </div>
+      <div style="display:grid; gap:.8rem">
+        <h3>O que define a região hoje</h3>
+        <ul class="facts">
+          <li><strong>Distância medida em dias de barco</strong><span>Muitas comunidades só são alcançadas por rio. Uma consulta, uma vacina ou um documento podem exigir viagens de 1 a 5 dias.</span></li>
+          <li><strong>Secas e cheias extremas</strong><span>2023 e 2024 tiveram secas históricas; em outubro de 2024 o Rio Negro chegou a 12,11 m em Manaus, o menor nível já medido. Rios secos isolam cidades inteiras.</span></li>
+          <li><strong>Conectividade chegando pelo leito dos rios</strong><span>O programa Norte Conectado instala cabos de fibra óptica no fundo dos rios (infovias). Onde ainda não chegou, o acesso é por satélite, caro e instável.</span></li>
+          <li><strong>Energia em sistemas isolados</strong><span>Centenas de localidades ainda dependem de geradores a diesel fora do sistema interligado nacional.</span></li>
+          <li><strong>Economia</strong><span>Polo Industrial da Zona Franca de Manaus, agronegócio em MT, PA, RO e TO, mineração no Pará e bioeconomia (açaí, castanha, cacau, pescado).</span></li>
+          <li><strong>Vitrine mundial</strong><span>Belém sediou a COP30 em novembro de 2025. O mundo financia projetos de clima, floresta e bioeconomia na região, e isso inclui fundos para tecnologia.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PROBLEMAS x STARTUPS -->
+<section class="block" id="problemas">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">2 · Problemas reais e startups possíveis</p>
+      <h2>Um problema concreto, uma solução, um comprador</h2>
+      <p>Cada cartão liga uma dor real da região a uma startup viável e a quem tem orçamento para pagar. A regra para a Amazônia: tudo precisa funcionar sem internet e em celular barato.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><p class="tag">Saúde</p><h3>Ribeirinhos sem atendimento contínuo</h3><dl>
+        <dt>Problema</dt><dd>Poucos médicos por habitante, comunidades a dias da sede, malária concentrada quase toda na região, contaminação por mercúrio do garimpo.</dd>
+        <dt>Startup</dt><dd>App offline para agentes de saúde com teleconsulta assíncrona. Detalhado na seção 3.</dd>
+        <dt>Quem compra</dt><dd>Secretarias municipais e estaduais de saúde; DSEIs (saúde indígena).</dd></dl></article>
+
+      <article class="card"><p class="tag">Saúde indígena</p><h3>Remédio que não chega na aldeia</h3><dl>
+        <dt>Problema</dt><dd>Estoque controlado em papel, voos e barcos sem planejamento, perdas por validade e falta de medicamento na ponta.</dd>
+        <dt>Startup</dt><dd>Gestão de estoque e logística de polos-base, com leitura de código de barras offline e previsão de consumo.</dd>
+        <dt>Quem compra</dt><dd>Ministério da Saúde (SESAI), DSEIs, organizações conveniadas.</dd></dl></article>
+
+      <article class="card"><p class="tag">Educação</p><h3>Escola ribeirinha sem internet</h3><dl>
+        <dt>Problema</dt><dd>Turmas multisseriadas, professor sozinho, frequência anotada em papel, transporte escolar por barco sem controle.</dd>
+        <dt>Startup</dt><dd>"Escola na caixa": servidor local com Wi-Fi e conteúdo offline, diário de classe que sincroniza depois e rotas de barco escolar com GPS.</dd>
+        <dt>Quem compra</dt><dd>Secretarias de educação (recursos do FUNDEB e do PNATE).</dd></dl></article>
+
+      <article class="card"><p class="tag">Transporte fluvial</p><h3>Barcos sem lista de passageiros</h3><dl>
+        <dt>Problema</dt><dd>Superlotação, naufrágios, passagem vendida em dinheiro e sem registro.</dd>
+        <dt>Startup</dt><dd>Bilhetagem digital com manifesto de passageiros, Pix e rastreamento da embarcação.</dd>
+        <dt>Quem compra</dt><dd>Agências reguladoras estaduais, empresas de navegação, prefeituras.</dd></dl></article>
+
+      <article class="card"><p class="tag">Meio ambiente</p><h3>Alerta de desmatamento que ninguém atende</h3><dl>
+        <dt>Problema</dt><dd>Os alertas do INPE chegam, mas o município não tem equipe nem fluxo para agir e perde recursos ligados a metas ambientais.</dd>
+        <dt>Startup</dt><dd>Painel municipal de alertas com fluxo de vistoria, relatório com foto georreferenciada e acompanhamento do CAR.</dd>
+        <dt>Quem compra</dt><dd>Secretarias de meio ambiente estaduais e municipais; municípios prioritários de programas federais.</dd></dl></article>
+
+      <article class="card"><p class="tag">Terra</p><h3>Ninguém sabe de quem é o terreno</h3><dl>
+        <dt>Problema</dt><dd>Sobreposição de títulos, posses sem documento e cidades sem cadastro imobiliário.</dd>
+        <dt>Startup</dt><dd>Regularização fundiária urbana (REURB) digital: mapeamento por drone, cadastro social em campo e emissão do título.</dd>
+        <dt>Quem compra</dt><dd>Institutos de terras estaduais e prefeituras (Lei 13.465/2017).</dd></dl></article>
+
+      <article class="card"><p class="tag">Defesa civil</p><h3>Cidades isoladas pela seca ou pela cheia</h3><dl>
+        <dt>Problema</dt><dd>Sem aviso antecipado, a ajuda humanitária chega tarde.</dd>
+        <dt>Startup</dt><dd>Sensores de nível de rio de baixo custo, previsão e alertas por SMS e WhatsApp, com controle de doações e cestas.</dd>
+        <dt>Quem compra</dt><dd>Defesas civis estaduais e municipais.</dd></dl></article>
+
+      <article class="card"><p class="tag">Energia</p><h3>Diesel caro em comunidades isoladas</h3><dl>
+        <dt>Problema</dt><dd>Geradores caros e poluentes; sistemas solares instalados quebram e ninguém percebe.</dd>
+        <dt>Startup</dt><dd>Monitoramento remoto de miniusinas solares com manutenção preditiva e energia pré-paga.</dd>
+        <dt>Quem compra</dt><dd>Concessionárias, programas federais de eletrificação, prefeituras.</dd></dl></article>
+
+      <article class="card"><p class="tag">Bioeconomia</p><h3>Produtor de açaí e castanha sem acesso a mercado</h3><dl>
+        <dt>Problema</dt><dd>Atravessadores ficam com a margem; compradores exigem prova de origem livre de desmatamento.</dd>
+        <dt>Startup</dt><dd>Rastreabilidade do lote, da árvore ao porto, com venda direta para merenda escolar e para exportação.</dd>
+        <dt>Quem compra</dt><dd>Cooperativas, prefeituras (PNAE exige no mínimo 30% de agricultura familiar), exportadores.</dd></dl></article>
+
+      <article class="card"><p class="tag">Gestão municipal</p><h3>Prefeitura que não arrecada</h3><dl>
+        <dt>Problema</dt><dd>Cadastro imobiliário desatualizado, IPTU quase zero e dependência total de repasses federais.</dd>
+        <dt>Startup</dt><dd>Recadastramento por imagem aérea e IA, com emissão de IPTU e nota fiscal de serviço no padrão nacional.</dd>
+        <dt>Quem compra</dt><dd>Prefeituras. O sistema se paga com a arrecadação nova.</dd></dl></article>
+
+      <article class="card"><p class="tag">Cidadania</p><h3>Documento a três dias de viagem</h3><dl>
+        <dt>Problema</dt><dd>Sem RG, CPF ou cadastro social, a família não acessa benefícios.</dd>
+        <dt>Startup</dt><dd>Balcão itinerante digital: kit para barco com coleta biométrica, agendamento e Cadastro Único offline.</dd>
+        <dt>Quem compra</dt><dd>Secretarias de assistência social e de justiça, tribunais (justiça itinerante).</dd></dl></article>
+
+      <article class="card"><p class="tag">Segurança</p><h3>Rios usados por crime e garimpo ilegal</h3><dl>
+        <dt>Problema</dt><dd>Rios enormes, pouca fiscalização e dados espalhados entre órgãos.</dd>
+        <dt>Startup</dt><dd>Plataforma de inteligência que cruza imagens de satélite, registros de embarcações e ocorrências.</dd>
+        <dt>Quem compra</dt><dd>Secretarias de segurança, polícias, órgãos ambientais.</dd></dl></article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. APP DE SAÚDE -->
+<section class="block feature" id="saude">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">3 · Ideia principal</p>
+      <h2>Rabeta Saúde: <em>a UBS que cabe no bolso do agente</em></h2>
+      <p>Rabeta é o pequeno motor de popa que leva o ribeirinho para todo lugar. O app leva o atendimento do mesmo jeito: funciona sem internet, roda em celular de entrada e envia os dados quando encontra sinal.</p>
+    </div>
+
+    <div class="feat-grid">
+      <div><b>Visita domiciliar offline</b><span>Cadastro de famílias e visitas no padrão do e-SUS APS. Tudo fica salvo no celular e sincroniza na UBS ou por satélite.</span></div>
+      <div><b>Teleconsulta assíncrona</b><span>O agente envia foto, áudio e sinais vitais. O médico na sede responde quando a mensagem chegar. Cada caso ocupa menos de 100 KB.</span></div>
+      <div><b>Malária com foto</b><span>Leitura assistida do teste rápido pela câmera e notificação pronta para o sistema de vigilância.</span></div>
+      <div><b>Gestantes e vacinas</b><span>Lista de gestantes, crianças com vacina atrasada e faltosos, com alerta para a próxima viagem.</span></div>
+      <div><b>Mapa de estoque</b><span>Onde há soro antiofídico, insulina e vacina em cada UBS fluvial e polo, para não perder tempo em emergência.</span></div>
+      <div><b>Painel do secretário</b><span>Os indicadores que definem o repasse federal da Atenção Primária, atualizados a cada sincronização.</span></div>
+    </div>
+
+    <div style="display:grid; gap:.7rem">
+      <p class="eyebrow">Como o dado viaja</p>
+      <div class="flow">
+        <span class="n">Celular do agente (offline)</span><span class="a">→</span>
+        <span class="n">Fila de envio</span><span class="a">→</span>
+        <span class="n">Wi-Fi da UBS ou satélite</span><span class="a">→</span>
+        <span class="n">Nuvem do município</span><span class="a">→</span>
+        <span class="n">e-SUS APS e RNDS</span>
+      </div>
+      <p class="note" style="color:var(--hero-muted)">Base técnica: Android 8 ou superior, banco local SQLite, integração com o e-SUS APS e com a Rede Nacional de Dados em Saúde (padrão FHIR), criptografia e registro de acesso exigidos pela LGPD. Telessaúde amparada pela Lei 14.510/2022.</p>
+    </div>
+
+    <div class="two">
+      <div style="display:grid; gap:.8rem">
+        <h3>Apresentação de venda ao secretário de saúde</h3>
+        <ol class="pitch">
+          <li><div><b>O problema no município dele</b><span>Quantas comunidades, quantos agentes, quantos dias de barco. Use os dados públicos do próprio município.</span></div></li>
+          <li><div><b>O custo de não fazer nada</b><span>Remoções de emergência, internações evitáveis, repasse federal perdido por indicador baixo.</span></div></li>
+          <li><div><b>A demonstração</b><span>Tire o celular do modo avião na frente dele e mostre os dados chegando.</span></div></li>
+          <li><div><b>O que muda em 90 dias</b><span>Cobertura de cadastro, pré-natal em dia, vacinas recuperadas.</span></div></li>
+          <li><div><b>Segurança e lei</b><span>LGPD, telessaúde regulamentada, integração com os sistemas oficiais do SUS.</span></div></li>
+          <li><div><b>Preço e forma de contratação</b><span>Valor anual, caminho legal (dispensa, pregão ou contrato de inovação) e fonte do recurso.</span></div></li>
+          <li><div><b>Prova social</b><span>Primeiro município piloto, depoimento do agente, números antes e depois.</span></div></li>
+          <li><div><b>Próximo passo</b><span>Termo de cooperação para piloto de 60 dias ou abertura do processo de contratação.</span></div></li>
+        </ol>
+      </div>
+      <div style="display:grid; gap:1rem; align-content:start">
+        <h3>Modelo de preço sugerido</h3>
+        <div class="price">
+          <div><span>Implantação e treinamento</span><b class="num">R$ 12 mil</b><span>Valor único para município pequeno</span></div>
+          <div><span>Licença</span><b class="num">R$ 35</b><span>Por agente de saúde por mês</span></div>
+        </div>
+        <p class="callout-dark">Exemplo: município com 100 agentes paga R$ 42 mil por ano de licença. Com a implantação, o primeiro ano soma R$ 54 mil, abaixo do limite de dispensa de 2026 (R$ 65.492,11). A contratação pode sair em semanas.</p>
+        <h3>De onde vem o dinheiro do comprador</h3>
+        <ul class="facts">
+          <li><strong>Repasses federais da Atenção Primária</strong><span>O app melhora os indicadores que aumentam esse repasse.</span></li>
+          <li><strong>Emendas parlamentares</strong><span>Metade das emendas individuais vai obrigatoriamente para a saúde. Deputados federais e estaduais da região são canal de venda.</span></li>
+          <li><strong>Programas de saúde digital do Ministério</strong><span>Recursos para planos de transformação digital de estados e municípios.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. VENDER AO ESTADO -->
+<section class="block" id="estado">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">4 · Governos estaduais</p>
+      <h2>Sistemas que um governo estadual compra</h2>
+      <p>Estados têm orçamento maior e ciclos mais longos. Um contrato estadual vira referência para os municípios do estado inteiro.</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Sistema</th><th>Secretaria que compra</th><th>Por que compra</th><th>Prioridade</th></tr></thead>
+        <tbody>
+          <tr><td><b>Regulação de leitos e fila de cirurgias</b></td><td>Saúde (SES)</td><td>Pressão pública por transparência da fila; leis estaduais exigem lista publicada</td><td><span class="pill">Alta</span></td></tr>
+          <tr><td><b>Gestão escolar e busca ativa contra evasão</b></td><td>Educação (SEDUC)</td><td>Frequência é condição para programas federais de permanência de estudantes</td><td><span class="pill">Alta</span></td></tr>
+          <tr><td><b>Licenciamento ambiental digital</b></td><td>Meio Ambiente (SEMA)</td><td>Fila de licenças trava investimentos; pressão por prazos</td><td><span class="pill">Alta</span></td></tr>
+          <tr><td><b>Inteligência fiscal e cobrança de dívida ativa</b></td><td>Fazenda e Procuradoria</td><td>Aumenta arrecadação; transição para o IBS até 2033</td><td><span class="pill">Alta</span></td></tr>
+          <tr><td><b>Atendimento ao cidadão por WhatsApp com IA</b></td><td>Casa Civil, ouvidorias</td><td>Lei de Governo Digital; reduz filas presenciais</td><td><span class="pill acai">Média</span></td></tr>
+          <tr><td><b>Monitoramento hidrológico e alertas</b></td><td>Defesa Civil</td><td>Secas e cheias recorrentes; recursos federais emergenciais</td><td><span class="pill acai">Média</span></td></tr>
+          <tr><td><b>Gestão de frota e combustível</b></td><td>Administração</td><td>Economia direta e rápida de medir</td><td><span class="pill acai">Média</span></td></tr>
+          <tr><td><b>Cibersegurança e resposta a incidentes</b></td><td>Empresa estadual de TI</td><td>Ataques de ransomware a órgãos públicos são frequentes</td><td><span class="pill acai">Média</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert">
+      <b>Atalho para entrar no governo estadual</b>
+      <p>Cada estado tem uma empresa ou órgão público de TI (Prodemge em Minas, PRODAP no Amapá, PRODEPA no Pará, PRODAM no Amazonas). O governo pode contratar essa empresa diretamente. Ser parceiro tecnológico dela abre portas que a licitação comum demora anos para abrir.</p>
+      <p><b>Momento certo:</b> os governadores eleitos em outubro de 2026 tomam posse em janeiro de 2027. Novembro e dezembro são a janela para apresentar soluções às equipes de transição.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. MINAS GERAIS -->
+<section class="block" id="minas">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">5 · Minas Gerais</p>
+      <h2>Digitalização dos municípios mineiros</h2>
+      <p>Minas tem 853 municípios, o maior número do país, e cerca de 20,5 milhões de habitantes. A estratégia é começar por uma cidade média, ganhar o atestado de capacidade técnica e escalar por consórcios intermunicipais.</p>
+    </div>
+
+    <div class="two">
+      <div style="display:grid; gap:.8rem">
+        <h3>Maiores municípios: onde está o orçamento</h3>
+        <div class="tbl">
+          <table style="min-width:22rem">
+            <thead><tr><th>Município</th><th>Habitantes</th><th>Abordagem</th></tr></thead>
+            <tbody>
+              <tr><td>Belo Horizonte</td><td class="r">2,32 mi</td><td>Grande; venda via edital ou inovação aberta</td></tr>
+              <tr><td>Uberlândia</td><td class="r">713 mil</td><td>Forte em tecnologia; bom caso de referência</td></tr>
+              <tr><td>Contagem</td><td class="r">622 mil</td><td>Região metropolitana; saúde e educação</td></tr>
+              <tr><td>Juiz de Fora</td><td class="r">541 mil</td><td>Polo regional da Zona da Mata</td></tr>
+              <tr><td>Montes Claros</td><td class="r">414 mil</td><td>Polo do Norte de Minas; saúde regional</td></tr>
+              <tr><td>Betim</td><td class="r">412 mil</td><td>Receita industrial alta</td></tr>
+              <tr><td>Uberaba</td><td class="r">338 mil</td><td>Agronegócio; gestão fiscal</td></tr>
+              <tr><td>Ribeirão das Neves</td><td class="r">330 mil</td><td>Demanda social alta</td></tr>
+              <tr><td>Governador Valadares</td><td class="r">257 mil</td><td>Polo do Vale do Rio Doce</td></tr>
+              <tr><td>Divinópolis</td><td class="r">231 mil</td><td>Polo do Centro-Oeste</td></tr>
+              <tr><td>Ipatinga</td><td class="r">228 mil</td><td>Vale do Aço; receita industrial</td></tr>
+              <tr><td>Sete Lagoas</td><td class="r">227 mil</td><td>Cidade média com decisão rápida</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">IBGE, Censo 2022, valores arredondados. Cidades de 100 a 400 mil habitantes costumam decidir mais rápido que a capital e têm mais orçamento que as pequenas.</p>
+      </div>
+
+      <div style="display:grid; gap:.8rem; align-content:start">
+        <h3>O que vender para as prefeituras mineiras</h3>
+        <ul class="facts">
+          <li><strong>Nota fiscal de serviço no padrão nacional e reforma tributária</strong><span>Com a troca do ISS pelo IBS até 2033, prefeituras precisam de sistemas novos e de mais receita própria (IPTU e ITBI).</span></li>
+          <li><strong>Recadastramento imobiliário por drone e IA</strong><span>Aumenta a arrecadação de IPTU; o projeto se paga e é fácil de aprovar.</span></li>
+          <li><strong>Saúde: fila de exames, prontuário e telessaúde</strong><span>Os consórcios intermunicipais de saúde de Minas compram em nome de dezenas de cidades.</span></li>
+          <li><strong>Municípios mineradores</strong><span>Cidades que recebem royalties da mineração (CFEM) têm caixa. Vendem bem: auditoria desses repasses, monitoramento de barragens e defesa civil.</span></li>
+          <li><strong>Atendimento digital com login gov.br</strong><span>Portal do cidadão, protocolo eletrônico, assinatura digital e WhatsApp.</span></li>
+          <li><strong>Kit de conformidade para municípios pequenos</strong><span>Publicação no Portal Nacional de Contratações (PNCP), transparência e LGPD. Cerca de três em cada quatro municípios mineiros têm até 20 mil habitantes, e o prazo especial deles na Lei 14.133 termina em 1º de abril de 2027.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="display:grid; gap:.9rem">
+      <h3>Jogadas legais para ganhar contratos em Minas</h3>
+      <ol class="steps">
+        <li><div><b>Cadastre-se no Portal de Compras MG e nos portais dos consórcios</b><span>O cadastro de fornecedores do estado (CAGEF) e as certidões em dia evitam desclassificação por documento.</span></div></li>
+        <li><div><b>Feche o primeiro contrato numa cidade média</b><span>O atestado de capacidade técnica desse contrato é o documento que vai abrir as próximas licitações.</span></div></li>
+        <li><div><b>Vença um pregão com registro de preços em um consórcio</b><span>Uma ata de registro de preços pode receber adesão de outros órgãos dentro dos limites da lei: até 50% por órgão que adere e até o dobro do total registrado.</span></div></li>
+        <li><div><b>Proponha um Procedimento de Manifestação de Interesse só para startups</b><span>O art. 81, §4º da Lei 14.133 permite que a prefeitura abra o procedimento apenas para startups. Sua solução entra no planejamento da compra.</span></div></li>
+        <li><div><b>Esteja na Associação Mineira de Municípios</b><span>O congresso anual da AMM reúne prefeitos de todo o estado. É a feira de vendas mais eficiente de Minas.</span></div></li>
+        <li><div><b>Use o ecossistema de BH</b><span>A comunidade de startups San Pedro Valley, a FAPEMIG e os programas estaduais de inovação dão visibilidade e financiamento.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 6. AMAPÁ -->
+<section class="block" id="amapa">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">6 · Amapá</p>
+      <h2>Amapá: pequeno, isolado e cheio de oportunidade</h2>
+      <p>O estado mais preservado do Brasil, sem ligação rodoviária com o resto do país, com fronteira com a União Europeia (Guiana Francesa) e com a nova fronteira do petróleo na costa.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b class="num">16</b><span>Municípios; quase todos com menos de 50 mil habitantes</span></div>
+      <div class="stat"><b class="num">734 mil</b><span>Habitantes (Censo 2022); Macapá com 443 mil e Santana com 107 mil</span></div>
+      <div class="stat"><b class="num">≈ 70%</b><span>Do território em áreas protegidas e terras indígenas</span></div>
+      <div class="stat"><b class="num">22 dias</b><span>Duração do apagão de novembro de 2020, que expôs a fragilidade da infraestrutura</span></div>
+    </div>
+
+    <div class="cards">
+      <article class="card"><p class="tag">Petróleo · Margem Equatorial</p><h3>Fornecedor local para a nova indústria</h3><dl>
+        <dt>Contexto</dt><dd>Em outubro de 2025 o IBAMA autorizou a Petrobras a perfurar na bacia da Foz do Amazonas, na costa do Amapá.</dd>
+        <dt>Startup</dt><dd>Cadastro e qualificação de fornecedores e mão de obra local, e monitoramento ambiental costeiro de manguezais e de derrames.</dd>
+        <dt>Quem compra</dt><dd>Governo do estado, órgão ambiental estadual, operadoras e suas contratadas.</dd></dl></article>
+
+      <article class="card"><p class="tag">Açaí e vigilância sanitária</p><h3>Açaí seguro contra a doença de Chagas</h3><dl>
+        <dt>Problema</dt><dd>Surtos de Chagas aguda por açaí contaminado aparecem no Amapá e no Pará quando falta o branqueamento do fruto.</dd>
+        <dt>Startup</dt><dd>Certificação digital de batedores de açaí, checklist de boas práticas e selo com QR Code para o consumidor.</dd>
+        <dt>Quem compra</dt><dd>Vigilância sanitária estadual e municipal; associações de batedores.</dd></dl></article>
+
+      <article class="card"><p class="tag">Cidade</p><h3>Áreas de ressaca de Macapá</h3><dl>
+        <dt>Problema</dt><dd>Áreas alagáveis ocupadas por casas sobre palafitas, sem saneamento nem cadastro.</dd>
+        <dt>Startup</dt><dd>Mapeamento por drone, cadastro social e planejamento de saneamento e regularização (REURB).</dd>
+        <dt>Quem compra</dt><dd>Prefeituras de Macapá e Santana, governo do estado, financiadores de saneamento.</dd></dl></article>
+
+      <article class="card"><p class="tag">Energia</p><h3>Nunca mais um apagão às cegas</h3><dl>
+        <dt>Problema</dt><dd>Hospitais e serviços críticos sem plano de contingência monitorado.</dd>
+        <dt>Startup</dt><dd>Monitoramento de geradores, nobreaks e combustível em hospitais, escolas e centros de dados públicos.</dd>
+        <dt>Quem compra</dt><dd>Secretaria de saúde, defesa civil, empresa estadual de TI.</dd></dl></article>
+
+      <article class="card"><p class="tag">Fronteira · Oiapoque</p><h3>Saúde e serviços binacionais</h3><dl>
+        <dt>Problema</dt><dd>Pacientes cruzam a fronteira com a Guiana Francesa sem histórico clínico compartilhado; povos indígenas Karipuna, Galibi e Palikur têm atendimento fragmentado.</dd>
+        <dt>Startup</dt><dd>Prontuário de bolso bilíngue (português e francês) e agenda de atendimento para a região de fronteira.</dd>
+        <dt>Quem compra</dt><dd>Município de Oiapoque, estado, saúde indígena, cooperação franco-brasileira.</dd></dl></article>
+
+      <article class="card"><p class="tag">Pesca</p><h3>Pescador sem registro, defeso sem controle</h3><dl>
+        <dt>Problema</dt><dd>Fraudes no seguro-defeso e falta de dados sobre o pescado.</dd>
+        <dt>Startup</dt><dd>Registro digital do pescador e do desembarque, com rastreio do pescado até o mercado.</dd>
+        <dt>Quem compra</dt><dd>Secretaria estadual de pesca, colônias de pescadores, prefeituras costeiras.</dd></dl></article>
+    </div>
+
+    <div class="alert">
+      <b>Como entrar no Amapá</b>
+      <p>Parcerias com a UNIFAP, o IFAP, a UEAP e o IEPA (instituto estadual de pesquisa) dão base técnica e acesso a editais de inovação da FAPEAP e do Sebrae. A empresa estadual de TI (PRODAP) é o canal para sistemas do governo. Como quase todos os municípios são pequenos, um "kit prefeitura" de conformidade e gestão vendido para os 16 municípios de uma vez é uma entrada barata e rápida.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. BRASIL E TIC -->
+<section class="block" id="brasil">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">7 · Brasil</p>
+      <h2>Startups para vender a órgãos públicos de todo o país</h2>
+      <p>São 5.570 municípios, 27 estados e centenas de órgãos federais, todos comprando pela mesma lei. Um produto que resolve uma exigência da Lei 14.133 vende em qualquer lugar.</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Startup</th><th>Dor que resolve</th><th>Comprador</th><th>Modelo</th></tr></thead>
+        <tbody>
+          <tr><td><b>Assistente de IA para o Estudo Técnico Preliminar e o Termo de Referência</b></td><td>Todo órgão precisa desses documentos e poucos servidores sabem fazê-los</td><td>Qualquer órgão</td><td>Assinatura</td></tr>
+          <tr><td><b>Pesquisa de preços automática</b></td><td>A lei exige pesquisa de preços; o PNCP tem os dados</td><td>Setores de compras</td><td>Assinatura</td></tr>
+          <tr><td><b>App do fiscal de contrato</b></td><td>Contratos sem fiscalização geram apontamentos dos tribunais de contas</td><td>Todo órgão</td><td>Por usuário</td></tr>
+          <tr><td><b>Dívida ativa com protesto e acordo online</b></td><td>Bilhões em créditos parados</td><td>Prefeituras, procuradorias</td><td>Mensalidade + desempenho</td></tr>
+          <tr><td><b>Atendimento por WhatsApp com IA</b></td><td>Filas e telefone que ninguém atende</td><td>Prefeituras, estados</td><td>Por conversa</td></tr>
+          <tr><td><b>Zeladoria pelo cidadão</b></td><td>Buraco, lâmpada e lixo sem fluxo de resolução</td><td>Prefeituras</td><td>Assinatura</td></tr>
+          <tr><td><b>LGPD como serviço</b></td><td>Municípios sem encarregado de dados nem política de privacidade</td><td>Prefeituras, câmaras</td><td>Mensalidade</td></tr>
+          <tr><td><b>Cibersegurança municipal</b></td><td>Ransomware paralisa prefeituras</td><td>Prefeituras, autarquias</td><td>Mensalidade</td></tr>
+          <tr><td><b>Fila de saúde transparente</b></td><td>Cidadão não sabe sua posição na fila</td><td>Secretarias de saúde</td><td>Assinatura</td></tr>
+          <tr><td><b>Telemetria de frota</b></td><td>Desvio de combustível e uso indevido</td><td>Todo órgão com frota</td><td>Por veículo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:grid; gap:.8rem">
+      <h3>Produtos de TIC que o governo compra todo ano</h3>
+      <div class="cards">
+        <div class="card"><p class="tag">Infraestrutura</p><dl><dd>Link de internet e SD-WAN, Wi-Fi público em praças e escolas, nuvem e data center, backup, certificados digitais.</dd></dl></div>
+        <div class="card"><p class="tag">Equipamentos</p><dl><dd>Tablets para agentes de saúde, kits de sala de aula conectada, totens de autoatendimento, câmeras com leitura de placas, drones.</dd></dl></div>
+        <div class="card"><p class="tag">Internet das coisas</p><dl><dd>Sensores de nível de rio, qualidade do ar, iluminação pública inteligente, medidores de água e energia.</dd></dl></div>
+        <div class="card"><p class="tag">Serviços</p><dl><dd>Suporte técnico, fábrica de software, ciência de dados e painéis, treinamento de servidores, segurança da informação.</dd></dl></div>
+      </div>
+      <p class="note">Produtos comuns (equipamentos, licenças, links) costumam ser comprados por pregão com registro de preços. É onde uma revenda ou integradora regional ganha volume.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. LEIS -->
+<section class="block" id="leis">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">8 · Leis e caminhos de contratação</p>
+      <h2>Os caminhos legais para fechar contrato</h2>
+      <p>Não existe atalho ilegal que valha a pena. Existe escolher o caminho certo para o tamanho e o tipo do produto. Valores de 2026, atualizados pelo Decreto 12.807/2025.</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Caminho</th><th>Base legal</th><th>Quando usar</th><th>Limite</th><th>Velocidade</th></tr></thead>
+        <tbody>
+          <tr><td><b>Dispensa por valor</b></td><td>Lei 14.133, art. 75, II</td><td>Primeiro contrato, piloto pago, município pequeno</td><td class="r">R$ 65.492,11/ano</td><td><span class="pill">Semanas</span></td></tr>
+          <tr><td><b>Pregão eletrônico</b></td><td>Lei 14.133, arts. 6º e 28</td><td>Software e serviços comuns, com especificação clara</td><td class="r">Sem limite</td><td><span class="pill acai">1 a 3 meses</span></td></tr>
+          <tr><td><b>Registro de preços e adesão</b></td><td>Lei 14.133, arts. 82 a 86</td><td>Escalar: outros órgãos aderem à sua ata</td><td class="r">50% por órgão; 2× no total</td><td><span class="pill">Rápida após a ata</span></td></tr>
+          <tr><td><b>Contrato Público para Solução Inovadora (CPSI)</b></td><td>LC 182/2021, arts. 12 a 15</td><td>Testar solução inovadora; depois fornecer sem nova licitação</td><td class="r">R$ 1,6 mi no teste</td><td><span class="pill acai">2 a 4 meses</span></td></tr>
+          <tr><td><b>Encomenda tecnológica</b></td><td>Lei 10.973/2004, art. 20; Lei 14.133, art. 75, V</td><td>Problema com risco tecnológico, sem solução pronta</td><td class="r">Sem limite fixo</td><td><span class="pill warn">Meses</span></td></tr>
+          <tr><td><b>Manifestação de Interesse só para startups</b></td><td>Lei 14.133, art. 81, §4º</td><td>Levar sua solução para o planejamento do órgão</td><td class="r">—</td><td><span class="pill acai">Planejamento</span></td></tr>
+          <tr><td><b>Diálogo competitivo</b></td><td>Lei 14.133, art. 32</td><td>Órgão grande que não sabe qual solução quer</td><td class="r">Sem limite</td><td><span class="pill warn">Longa</span></td></tr>
+          <tr><td><b>Inexigibilidade</b></td><td>Lei 14.133, art. 74</td><td>Fornecedor exclusivo comprovado. Usar com cautela</td><td class="r">Sem limite</td><td><span class="pill warn">Alto risco de questionamento</span></td></tr>
+          <tr><td><b>Compra por consórcio público</b></td><td>Lei 11.107/2005</td><td>Vender para vários municípios de uma vez</td><td class="r">Conforme a modalidade</td><td><span class="pill acai">Variável</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two">
+      <div style="display:grid; gap:.8rem">
+        <h3>Vantagens para micro e pequenas empresas</h3>
+        <ul class="facts">
+          <li><strong>Itens de até R$ 80 mil só para ME e EPP</strong><span>LC 123/2006, art. 48, I. Grandes empresas não disputam.</span></li>
+          <li><strong>Empate ficto</strong><span>Se a sua proposta ficar até 5% acima da de uma grande empresa no pregão (10% nas outras modalidades), você pode cobrir o preço e vencer.</span></li>
+          <li><strong>Prazo extra para certidões</strong><span>Cinco dias úteis para regularizar pendência fiscal depois de vencer.</span></li>
+        </ul>
+        <h3>Leis que o seu produto precisa respeitar</h3>
+        <ul class="facts">
+          <li><strong>LGPD (Lei 13.709/2018)</strong><span>Dados de cidadãos, principalmente de saúde.</span></li>
+          <li><strong>Governo Digital (Lei 14.129/2021)</strong><span>Serviços digitais, dados abertos e interoperabilidade.</span></li>
+          <li><strong>Assinaturas eletrônicas (Lei 14.063/2020)</strong><span>Que tipo de assinatura vale em cada ato.</span></li>
+          <li><strong>Acesso à Informação (Lei 12.527/2011)</strong><span>Transparência e portais obrigatórios.</span></li>
+          <li><strong>Telessaúde (Lei 14.510/2022)</strong><span>Base legal do atendimento a distância.</span></li>
+        </ul>
+      </div>
+      <div style="display:grid; gap:.8rem; align-content:start">
+        <h3>Como aumentar suas chances</h3>
+        <ol class="steps">
+          <li><div><b>Leia o Plano de Contratações Anual</b><span>Cada órgão publica o que pretende comprar no ano. Você descobre a demanda antes do edital.</span></div></li>
+          <li><div><b>Responda às cotações</b><span>Seu preço vira a referência do edital. Ignorar pedidos de cotação é perder a venda antes dela começar.</span></div></li>
+          <li><div><b>Tenha a prova de conceito pronta</b><span>Editais podem exigir demonstração do sistema. Quem demonstra bem, vence.</span></div></li>
+          <li><div><b>Mostre a fonte do dinheiro</b><span>Diga ao gestor qual recurso paga o seu produto: SUS, FUNDEB, emenda, convênio ou arrecadação nova.</span></div></li>
+          <li><div><b>Cobre por desempenho quando fizer sentido</b><span>O art. 144 permite remuneração variável ligada a metas. Ideal para sistemas que aumentam arrecadação ou reduzem custo.</span></div></li>
+          <li><div><b>Acumule atestados</b><span>Cada contrato entregue gera um atestado de capacidade técnica. Eles são o seu maior ativo comercial.</span></div></li>
+        </ol>
+        <div class="alert">
+          <b>O que nunca fazer</b>
+          <ul class="donts">
+            <li>Dividir uma compra em várias pequenas para caber na dispensa (fracionamento).</li>
+            <li>Escrever o edital para o órgão com exigências que só você cumpre.</li>
+            <li>Oferecer qualquer vantagem a servidor ou político (Lei Anticorrupção 12.846/2013 e crimes do Código Penal).</li>
+            <li>Fazer "teste grátis" sem termo formal. Isso pode impedir você de participar da licitação depois.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. PLANO -->
+<section class="block" id="plano">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">9 · Execução</p>
+      <h2>Plano de 90 dias</h2>
+      <p>Começa agora, aproveitando a transição dos governos estaduais e o prazo de abril de 2027 dos municípios pequenos.</p>
+    </div>
+    <div class="timeline">
+      <div class="phase"><p class="eyebrow">Dias 1 a 30</p><h3>Base pronta</h3><ul>
+        <li>Abrir a empresa como ME ou EPP e tirar todas as certidões</li>
+        <li>Cadastrar no Compras.gov.br, no Portal de Compras MG e nos portais dos estados do Norte</li>
+        <li>Construir o protótipo do Rabeta Saúde em modo offline</li>
+        <li>Escolher 3 municípios-alvo no Amapá e 3 em Minas</li>
+      </ul></div>
+      <div class="phase"><p class="eyebrow">Dias 31 a 60</p><h3>Primeiras reuniões</h3><ul>
+        <li>Apresentar a secretários de saúde com a demonstração offline</li>
+        <li>Inscrever-se em editais da FAPEAP, FAPEMIG, Centelha e Sebrae</li>
+        <li>Fechar parceria com uma universidade (UNIFAP ou federal mineira)</li>
+        <li>Apresentar às equipes de transição dos novos governadores</li>
+      </ul></div>
+      <div class="phase"><p class="eyebrow">Dias 61 a 90</p><h3>Primeiro contrato</h3><ul>
+        <li>Contrato por dispensa ou CPSI em um município</li>
+        <li>Medir resultados semanais para gerar o atestado</li>
+        <li>Preparar a documentação para o pregão com registro de preços</li>
+        <li>Mapear consórcios intermunicipais para escalar</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. FONTES -->
+<section class="block" id="fontes">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">10 · Fontes</p>
+      <h2>Fontes e conferência</h2>
+      <p>Números de população vêm do Censo 2022 e estão arredondados. Valores e prazos legais mudam: confirme no texto oficial antes de usar numa proposta. Este material não é parecer jurídico.</p>
+    </div>
+    <ul class="sources">
+      <li><a href="https://agenciagov.ebc.com.br/noticias/202510/em-2025-desmatamento-tem-reducao-de-11-08-na-amazonia-e-11-49-no-cerrado" target="_blank" rel="noopener">Agência Gov: PRODES 2025, queda de 11,08% na Amazônia</a></li>
+      <li><a href="https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/20251015Nota_tcnica_EstimativaPRODES_2025.pdf" target="_blank" rel="noopener">INPE: nota técnica da estimativa PRODES 2025</a></li>
+      <li><a href="https://sites.unipampa.edu.br/propladi/files/2026/01/decreto-12-807-2025-limites-dispensa-2026.pdf" target="_blank" rel="noopener">Decreto 12.807/2025: limites de dispensa para 2026</a></li>
+      <li><a href="https://effecti.com.br/decreto-12807-de-2025/" target="_blank" rel="noopener">Effecti: resumo dos valores atualizados da Lei 14.133</a></li>
+      <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm" target="_blank" rel="noopener">Lei 14.133/2021: Licitações e Contratos (Planalto)</a></li>
+      <li><a href="https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp182.htm" target="_blank" rel="noopener">Lei Complementar 182/2021: Marco Legal das Startups</a></li>
+      <li><a href="https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp123.htm" target="_blank" rel="noopener">Lei Complementar 123/2006: Estatuto da Micro e Pequena Empresa</a></li>
+      <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2004/lei/l10.973.htm" target="_blank" rel="noopener">Lei 10.973/2004: Lei de Inovação</a></li>
+      <li><a href="https://jus.com.br/artigos/104736/municipios-ate-20-mil-habitantes-e-a-nova-lei-de-licitacoes-14-133-21" target="_blank" rel="noopener">Jus: municípios de até 20 mil habitantes e a Lei 14.133</a></li>
+      <li><a href="https://censo2022.ibge.gov.br/" target="_blank" rel="noopener">IBGE: Censo Demográfico 2022</a></li>
+      <li><a href="https://www.pncp.gov.br/" target="_blank" rel="noopener">Portal Nacional de Contratações Públicas (PNCP)</a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Atlas GovTech da Amazônia · pesquisa preparada em novembro de 2026.</div>
+</footer>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting && map[e.target.id]){
+        links.forEach(function(l){ l.classList.remove('on'); });
+        var a = map[e.target.id];
+        a.classList.add('on');
+        var bar = a.parentNode; bar.scrollLeft = a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2;
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  Object.keys(map).forEach(function(id){ var s = document.getElementById(id); if (s) io.observe(s); });
+})();
+</script>
+</body>
+</html>
