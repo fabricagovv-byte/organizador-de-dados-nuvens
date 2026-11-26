@@ -1,0 +1,413 @@
+[
+ {
+  "orgao": "MUNICIPIO DE CORDISBURGO",
+  "uf": "MG",
+  "ano": "2026",
+  "mod": "Pregão - Eletrônico",
+  "data": "2026-10-05",
+  "sit": "Divulgada no PNCP",
+  "obj": "REGISTRO DE PREÇO PARA FUTURA E EVENTUAL CONTRATAÇÃO DE SERVIÇOS ESPECIALIZADOS DE DIGITALIZAÇÃO DE DOCUMENTOS, BEM COMO O LICENCIAMENTO DE SOFTWARE DE GESTÃO ELETRÔNICA DE DOCUMENTOS GED, VISANDO ATENDER ÀS NECESSIDADES",
+  "url": "https://pncp.gov.br/app/editais/18116137000171/2026/176",
+  "itens": [
+   {
+    "n": 1,
+    "desc": "DIGITALIZAÇÃO E TRATAMENTO DE DOCUMENTOS",
+    "qtd": 1000000.0,
+    "est": 130000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 90000.0,
+      "unit": 0.09,
+      "data": "2026-10-05"
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "desc": "LICENÇA DE USO DE SOFTWARE DE GESTÃO DE DOCUMENTOS  GED",
+    "qtd": 12.0,
+    "est": 11790.6,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 9990.0,
+      "unit": 832.5,
+      "data": "2026-10-05"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "orgao": "MUNICIPIO DE CORDISBURGO",
+  "uf": "MG",
+  "ano": "2026",
+  "mod": "Pregão - Eletrônico",
+  "data": "2026-09-16",
+  "sit": "Divulgada no PNCP",
+  "obj": "REGISTRO DE PREÇO PARA FUTURA E EVENTUAL CONTRATAÇÃO DE SERVIÇOS ESPECIALIZADOS DE DIGITALIZAÇÃO DE DOCUMENTOS, BEM COMO O LICENCIAMENTO DE SOFTWARE DE GESTÃO ELETRÔNICA DE DOCUMENTOS (GED), VISANDO ATENDER ÀS NECESSIDAD",
+  "url": "https://pncp.gov.br/app/editais/18116137000171/2026/163",
+  "itens": [
+   {
+    "n": 1,
+    "desc": "DIGITALIZAÇÃO E TRATAMENTO DE DOCUMENTOS - CAPTURA FÍSICA DE IMAGEM DE DOCUMENTOS EM FORMATO PDF, DO TAMANHO CARTA ATÉ A",
+    "qtd": 1000000.0,
+    "est": 130000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 90000.0,
+      "unit": 0.09,
+      "data": "2026-10-05"
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "desc": "LICENÇA DE USO DE SOFTWARE DE GESTÃO DE DOCUMENTOS - GED - FORNECIMENTO DE LICENÇA DE USO DE SOFTWARE PARA 02 USUÁRIOS, ",
+    "qtd": 12.0,
+    "est": 11790.6,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 9990.0,
+      "unit": 832.5,
+      "data": "2026-10-05"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "orgao": "MUNICIPIO DE IBIA",
+  "uf": "MG",
+  "ano": "2026",
+  "mod": "Pregão - Eletrônico",
+  "data": "2026-08-17",
+  "sit": "Divulgada no PNCP",
+  "obj": "[LICITANET] - CONTRATAÇÃO DE SOLUÇÃO INTEGRADA PARA MANUTENÇÃO DE SERVIÇOS \nADMINISTRATIVOS DO MUNICÍPIO DE IBIÁ-MG EM CONFORMIDADE COM A LEI GERAL DE \nPROTEÇÃO DE DADOS (LGPD), E AQUISIÇÃO DE SOLUÇÃO TECNOLÓGICA DE GEST",
+  "url": "https://pncp.gov.br/app/editais/18584961000156/2026/105",
+  "itens": [
+   {
+    "n": 7904836,
+    "desc": "Digitalização de documentos A4 até ofício (216 mm  330 mm), com preparação, higienização, captura em 300 dpi, OCR, PDF/A",
+    "qtd": 7100000.0,
+    "est": 2130000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMACAO LTDA",
+      "ni": "24361188000161",
+      "val": 1065000.0,
+      "unit": 0.15,
+      "data": "2026-09-21"
+     }
+    ]
+   },
+   {
+    "n": 7904839,
+    "desc": "Aquisição e implantação da solução tecnológica de gestão de documentos e processos, com licença perpétua, assinatura dig",
+    "qtd": 1.0,
+    "est": 178743.82,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMACAO LTDA",
+      "ni": "24361188000161",
+      "val": 114000.0,
+      "unit": 114000.0,
+      "data": "2026-09-21"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "orgao": "MUNICIPIO DE ARACUAI",
+  "uf": "MG",
+  "ano": "2025",
+  "mod": "Pregão - Eletrônico",
+  "data": "2025-07-24",
+  "sit": "Divulgada no PNCP",
+  "obj": "REGISTRO DE PREÇO PARA A FUTURA E EVENTUAL A CONTRATAÇÃO DE SOLUÇÃO INTEGRADA PARA MANUTENÇÃO DE SERVIÇOS ADMINISTRATIVOS DA PREFEITURA MUNICIPAL DE ARAÇUAÍ  MG, EM CONFORMIDADE COM A LEI GERAL DE PROTEÇÃO DE DADOS (LGPD",
+  "url": "https://pncp.gov.br/app/editais/17963083000117/2025/54",
+  "itens": [
+   {
+    "n": 1,
+    "desc": "DIGITALIZAÇÃO DE DOCUMENTOS  PAPEL A4 ATÉ OFÍCIO 216 X330MM DIGITALIZAÇÃO DE DOCUMENTOS COM FORNECIMENTO DE MÃO DE OBRA ",
+    "qtd": 30000000.0,
+    "est": 9600000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 9000000.0,
+      "unit": 0.3,
+      "data": "2025-08-12"
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "desc": "DIGITALIZAÇÃO DE DOCUMENTOS PAPEL A3 DIGITALIZAÇÃO DE DOCUMENTOS COM FORNECIMENTO DE MÃO DE OBRA ESPECIALIZADA PARA OPER",
+    "qtd": 300000.0,
+    "est": 234000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 225000.0,
+      "unit": 0.75,
+      "data": "2025-08-12"
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "desc": "DIGITALIZAÇÃO DE DOCUMENTOS  PAPEL A0 E A1 DIGITALIZAÇÃO DE DOCUMENTOS COM FORNECIMENTO DE MÃO DE OBRA ESPECIALIZADA PAR",
+    "qtd": 100000.0,
+    "est": 1016000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 900000.0,
+      "unit": 9.0,
+      "data": "2025-08-12"
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "desc": "CARIMBO DO TEMPO ACT ICP BRASIL",
+    "qtd": 5000.0,
+    "est": 1300.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 1250.0,
+      "unit": 0.25,
+      "data": "2025-08-12"
+     }
+    ]
+   },
+   {
+    "n": 5,
+    "desc": "IMPLANTAÇÃO DE SOLUÇÃO TECNOLÓGICA DE GESTÃO DE DOCUMENTOS E PROCESSOS IMPLANTAÇÃO DE SOLUÇÃO TECNOLÓGICA DE GESTÃO DE D",
+    "qtd": 3.0,
+    "est": 14532.99,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 14400.0,
+      "unit": 4800.0,
+      "data": "2025-08-12"
+     }
+    ]
+   },
+   {
+    "n": 6,
+    "desc": "LOCAÇÃO DE SOLUÇÃO TECNOLÓGICA DE GESTÃO DE DOCUMENTOS E DE PROCESSOS LOCAÇÃO DE SOLUÇÃO TECNOLÓGICA DE GESTÃO DE DOCUME",
+    "qtd": 12.0,
+    "est": 21987.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 18000.0,
+      "unit": 1500.0,
+      "data": "2025-08-12"
+     }
+    ]
+   },
+   {
+    "n": 7,
+    "desc": "HORAS ANALISTA PARA DESENVOLVIMENTO / CUSTOMIZAÇÃO DOS SERVIÇOS E SISTEMAS HORAS ANALISTA PARA DESENVOLVIMENTO / CUSTOMI",
+    "qtd": 5000.0,
+    "est": 1409700.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 750000.0,
+      "unit": 150.0,
+      "data": "2025-08-12"
+     }
+    ]
+   },
+   {
+    "n": 8,
+    "desc": "GUARDA FÍSICA DE DOCUMENTOS EM CAIXA BOX GUARDA FÍSICA DE DOCUMENTOS EM CAIXA BOX, INCLUINDO COLETA E TRANSPORTE DOS DOC",
+    "qtd": 12000.0,
+    "est": 77640.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 72000.0,
+      "unit": 6.0,
+      "data": "2025-08-12"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "orgao": "MANHUMIRIM CAMARA MUNICIPAL",
+  "uf": "MG",
+  "ano": "2024",
+  "mod": "Dispensa",
+  "data": "2024-11-28",
+  "sit": "Divulgada no PNCP",
+  "obj": "CONSTITUI OBJETO DA PRESENTE DISPENSA LICITAÇÃO ELETRÔNICA A CONTRATAÇÃO DE EMPRESA ESPECIALIZADA E SERVIÇO DE ARQUIVOLOGIA PARA ORGANIZAÇÃO, MONTAGEM, RESTAURAÇÃO, IMPLEMENTAÇÃO E IDENTIFICAÇÃO DE ARQUIVO FÍSICO, ARMAZE",
+  "url": "https://pncp.gov.br/app/editais/22702369000189/2024/29",
+  "itens": [
+   {
+    "n": 1,
+    "desc": "SERVIÇOS DE ORGANIZAÇÃO/DIGITALIZAÇÃO DE ARQUIVO FÍSICO Contratação de empresa especializada com utilização de mão de ob",
+    "qtd": 1.0,
+    "est": 16000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 15000.0,
+      "unit": 15000.0,
+      "data": "2024-12-03"
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "desc": "SISTEMA DE DIGITALIZAÇÃO E SOFTWARE DE GESTÃO DOCUMENTAL Fornecimento de equipamentos e locação de software de gestão do",
+    "qtd": 12.0,
+    "est": 16800.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 15600.0,
+      "unit": 1300.0,
+      "data": "2024-12-03"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "orgao": "MUNICIPIO DE SANTO ANTONIO DO ITAMBE",
+  "uf": "MG",
+  "ano": "2024",
+  "mod": "Pregão - Eletrônico",
+  "data": "2024-08-09",
+  "sit": "Suspensa",
+  "obj": "CONTRATAÇÃO DE EMPRESA ESPECIALIZADA NA PRESTAÇÃO DE SERVIÇO DE DIGITALIZAÇÃO EM FORMATO PDF E INDEXAÇÃO DE DOCUMENTOS A3 E A4, COM OBSERVÂNCIA DA LEI GERAL DE PROTEÇÃO DE DADOS (LEI FEDERAL Nº 13.709 DE 14 DE AGOSTO DE ",
+  "url": "https://pncp.gov.br/app/editais/18303222000149/2024/49",
+  "itens": [
+   {
+    "n": 1,
+    "desc": "Servicos de digitalizacao / indexacao de documentos paginas formato A4. Unidade de Medida: Unidade. Codigo Catser: 27278",
+    "qtd": 1200000.0,
+    "est": 444000.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 149640.0,
+      "unit": 0.1247,
+      "data": "2024-10-21"
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "desc": "Servicos de digitalizacao / indexacao de documentos pagina formato A3:",
+    "qtd": 500.0,
+    "est": 435.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV TECNOLOGIA DA INFORMAÇÃO",
+      "ni": "24361188000161",
+      "val": 225.0,
+      "unit": 0.45,
+      "data": "2024-10-21"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "orgao": "MUNICIPIO DE SANTO ANTONIO DO RIO ABAIXO",
+  "uf": "MG",
+  "ano": "2024",
+  "mod": "Pregão - Eletrônico",
+  "data": "2024-03-14",
+  "sit": "Divulgada no PNCP",
+  "obj": "REGISTRO DE PREÇOS PARA CONTRATAÇÃO DE EMPRESA RESPONSÁVEL PELA PRESTAÇÃO DE SERVIÇOS PARA CONVERSÃO DE DOCUMENTOS FÍSICOS EM FORMATO DIGITAL COM VALIDADE LEGAL, CERTIFICADO DIGITAL, COM O FORNECIMENTO DO SOFTWARE DE G.E",
+  "url": "https://pncp.gov.br/app/editais/18303248000197/2024/23",
+  "itens": [
+   {
+    "n": 1,
+    "desc": "SERVIÇOS DE DIGITALIZAÇÃO COM VALIDADE LEGAL DE TODO ACERVO DE DOCUMENTOS E PROCESSOS FÍSICOS EM TRAMITE DE ARQUIVOS GER",
+    "qtd": 250000.0,
+    "est": 1382500.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV SERVIÇOS LTDA",
+      "ni": "46943152000129",
+      "val": 40000.0,
+      "unit": 0.16,
+      "data": "2024-04-09"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "orgao": "CAMARA MUNICIPAL DE PONTALINA",
+  "uf": "GO",
+  "ano": "2023",
+  "mod": "Dispensa",
+  "data": "2023-11-28",
+  "sit": "Divulgada no PNCP",
+  "obj": "PRESTAÇÃO DE SERVIÇOS DE IMPORTAÇÃO DO SISTEMA DE GERENCIAMENTO ELETRÔNICO DE DOCUMENTOS, INCLUINDO TREINAMENTO, SERVIÇO DE LOCAÇÃO DE SOFTWARE DE GESTÃO ELETRÔNICA DE DOCUMENTOS COM MODULO DE ASSINATURA DIGITAL, WORKFLO",
+  "url": "https://pncp.gov.br/app/editais/00269444000127/2023/69",
+  "itens": [
+   {
+    "n": 1,
+    "desc": "SERVIÇO DE IMPORTAÇÃO DE SISTEMA DE GERENCIAMENTO ELETRONICO DE DOCUMENTOS, INCLUINDO TREINAMENTO",
+    "qtd": 1.0,
+    "est": 4500.0,
+    "res": [
+     {
+      "forn": "DIGITALGOV SERVICOS LTDA",
+      "ni": "46943152000129",
+      "val": 500.0,
+      "unit": 500.0,
+      "data": "2023-11-21"
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "desc": "SERVIÇO DE LOCAÇÃO DE SOFTWARE DE GESTÃO ELETRÔNICA DE DOCUMENTOS COM MODULO DE ASSINATURA DIGITAL, WORKFLOW, CEDOC E CR",
+    "qtd": 2.0,
+    "est": 3195.26,
+    "res": [
+     {
+      "forn": "DIGITALGOV SERVICOS LTDA",
+      "ni": "46943152000129",
+      "val": 700.0,
+      "unit": 350.0,
+      "data": "2023-11-21"
+     }
+    ]
+   }
+  ]
+ }
+]
