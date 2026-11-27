@@ -20,6 +20,25 @@ def short(c, n=48):
     if f: return f[:n]
     x = re.sub(r'^(CONSORCIO|CONSÓRCIO)\s+(PUBLICO\s+|PÚBLICO\s+)?(INTERMUNICIPAL\s+|REGIONAL\s+|INTERFEDERATIVO\s+)?(DE\s+|DO\s+|DA\s+|DOS\s+|DAS\s+)?', '', c['nome'].upper()).strip()
     return (x or c['nome']).title()[:n]
+import os as _os, re
+COMP = json.load(open('../mgterr-dl/cons_compras.json')) if _os.path.exists('../mgterr-dl/cons_compras.json') else []
+PCA = json.load(open('../mgterr-dl/cons_pca.json')) if _os.path.exists('../mgterr-dl/cons_pca.json') else {'feitos': [], 'pcas': [], 'itens': []}
+import unicodedata as _ud
+def _n(x): return _ud.normalize('NFKD', (x or '').lower()).encode('ascii','ignore').decode()
+COMP = [x for x in COMP if not (re.search(r'impress|outsourcing|reprograf', _n(x['objeto'])) and not re.search(r'gestao documental|gestao eletronica de document|\bged\b', _n(x['objeto'])))]
+COMP = [x for x in COMP if not re.search(r'valor que se empenha', _n(x['objeto']))]
+comp_by = {}
+for x in sorted(COMP, key=lambda x: x['data'], reverse=True): comp_by.setdefault(x['cnpj'], []).append(x)
+plan_by = {}
+for x in PCA['itens']: plan_by.setdefault(x['cnpj'], []).append(x)
+pca_pub = {}
+for x in PCA['pcas']: pca_pub.setdefault(x['cnpj'], []).append(x['ano'])
+pca_lidos = {k[:-4] for k in PCA['feitos']}
+def marca(c):
+    m = ''
+    if c['cnpj'] in comp_by: m += '<b>●</b> '
+    if c['cnpj'] in plan_by: m += '<b>◆</b> '
+    return m
 # consórcios por território (pela cidade-sede)
 id2inter = {m['id']: m['inter'].replace('Juíz de Fora','Juiz de Fora') for m in TT.M}
 porT = {}
@@ -166,17 +185,47 @@ P.append(pg(f'''<p class="eb">Antes de ligar</p><h2 style="font-size:28pt; margi
   <div class="box" style="margin-top:6mm"><p class="eb">Códigos de resultado para as folhas</p>
   <p style="margin-top:2mm"><b>A</b> agendou reunião · <b>P</b> pediu proposta · <b>R</b> retornar depois · <b>S</b> sem interesse agora · <b>N</b> não atendeu · <b>X</b> número errado</p></div>''', 'Roteiro de ligação'))
 
+# COMPRAS E PLANOS DE DIGITALIZAÇÃO
+alvo = [c for c in CONS if c['cnpj'] in comp_by or c['cnpj'] in plan_by]
+alvo.sort(key=lambda c: (-(len(comp_by.get(c['cnpj'], [])) + len(plan_by.get(c['cnpj'], []))), short(c)))
+def bloco(c):
+    ti = id2inter.get(str(c.get('ibge') or ''), '')
+    lin = ''
+    for x in comp_by.get(c['cnpj'], [])[:4]:
+        lin += f'<tr><td style="width:20mm">● {"Edital" if x["tipo"] == "edital" else "Ata"}</td><td style="width:18mm">{x["data"][8:10]}/{x["data"][5:7]}/{x["data"][:4]}</td><td>{H.escape(x["objeto"][:150])}</td><td style="width:22mm; font-size:7.5pt">{H.escape(x.get("situacao") or "")}</td></tr>'
+    for x in plan_by.get(c['cnpj'], [])[:4]:
+        q = f'{fmt(x["qtd"])} {x["un"] if x.get("un") and x["un"] != "-" else ""}'.strip() if x.get('qtd') else ''
+        lin += f'<tr><td>◆ Plano {x["ano"]}</td><td>{(x.get("data") or "")[8:10]}/{(x.get("data") or "")[5:7]}</td><td>{H.escape((x.get("desc") or "")[:150])}{" · " + q if q else ""}</td><td class="r">{("R$ " + fmt(x["valor"])) if x.get("valor") else ""}</td></tr>'
+    return f'<div style="break-inside:avoid; margin-top:4mm"><p style="font-family:var(--fh); font-size:12pt; font-weight:700">{H.escape(short(c, 60))} <span style="font-weight:500; font-size:9pt; color:var(--g5)">· {H.escape((c.get("municipio") or c.get("cidade") or "").title())} · {H.escape(ti)} · {tel(c.get("tel1"))}</span></p><table style="margin-top:1mm; font-size:8.5pt"><tbody>{lin}</tbody></table></div>'
+com_pca = len({k for k in pca_pub})
+resumo = f'''<p class="eb">Compras de digitalização</p><h2 style="font-size:26pt; margin-top:2mm">Quem já compra ou planeja comprar</h2>
+  <p style="margin-top:3mm">Editais e atas de digitalização, gestão documental e GED publicados pelos consórcios no PNCP, e itens desses temas nos Planos de Contratações Anuais de 2026 e 2027.</p>
+  <div class="kpis" style="margin-top:5mm">
+    <div><b>{len(CONS)}</b><span>consórcios consultados</span></div>
+    <div><b>{len(comp_by)}</b><span>com edital ou ata do tema (●)</span></div>
+    <div><b>{com_pca}</b><span>publicaram plano 2026 ou 2027</span></div>
+    <div><b>{len(plan_by)}</b><span>com o tema no plano (◆)</span></div>
+  </div>
+  <div class="box" style="margin-top:5mm"><p><b>Como usar:</b> ligue primeiro para os consórcios marcados. Quem já comprou conhece o serviço e pode renovar ou ampliar; quem planejou tem verba prevista e ainda vai abrir a licitação. Os mesmos símbolos aparecem nas folhas de ligação.</p></div>'''
+bl = [bloco(c) for c in alvo]
+if not bl: bl = ['<div class="box" style="margin-top:6mm"><p>Nenhum consórcio da lista tem edital, ata ou plano com estes temas no PNCP.</p></div>']
+pg_now = [resumo]; cnt = 3
+for b_ in bl:
+    if cnt >= 7: P.append(pg(''.join(pg_now), 'Compras')); pg_now = ['<p class="eb">Compras de digitalização (continuação)</p>']; cnt = 0
+    pg_now.append(b_); cnt += 1
+P.append(pg(''.join(pg_now), 'Compras'))
+
 # FOLHAS DE LIGAÇÃO
 ordem = [t['nome'] for t in TS] + (['Sem território identificado'] if 'Sem território identificado' in porT else [])
 for nome in ordem:
     cs = porT.get(nome, [])
     for k in range(0, len(cs), 9):
         grp = cs[k:k+9]
-        rows = ''.join(f'''<tr class="call"><td><b style="font-size:9pt">{H.escape(short(c, 55))}</b><br><span style="font-size:7.5pt; color:var(--g5)">{H.escape(c["nome"][:70])}</span><br><span style="font-size:7.5pt">{H.escape((c.get("municipio") or c.get("cidade") or "").title())} · CNPJ {c["cnpj"]}</span></td>
+        rows = ''.join(f'''<tr class="call"><td><b style="font-size:9pt">{marca(c)}{H.escape(short(c, 55))}</b><br><span style="font-size:7.5pt; color:var(--g5)">{H.escape(c["nome"][:70])}</span><br><span style="font-size:7.5pt">{H.escape((c.get("municipio") or c.get("cidade") or "").title())} · CNPJ {c["cnpj"]}</span></td>
   <td style="font-family:var(--fm); font-size:8.5pt">{tel(c.get("tel1"))}{"<br>" + tel(c.get("tel2")) if c.get("tel2") else ""}<br><span style="font-size:7pt">{H.escape((c.get("email") or "").lower())}</span></td>
   <td class="blank"></td><td class="blank"></td><td class="blank" style="width:12mm"></td><td class="blank"></td></tr>''' for c in grp)
         P.append(pg(f'''<p class="eb">Folha de ligação</p><h2 style="font-size:20pt; margin-top:1mm">{H.escape(nome)}{f" · {k//9+1}/{(len(cs)+8)//9}" if len(cs) > 9 else ""}</h2>
-  <table style="margin-top:4mm"><thead><tr><th style="width:62mm">Consórcio</th><th style="width:36mm">Telefone · e-mail</th><th>Data</th><th>Falou com</th><th>Res.</th><th>Anotações / retorno</th></tr></thead><tbody>{rows}</tbody></table>''', 'Ligações'))
+  <table style="margin-top:4mm"><thead><tr><th style="width:62mm">Consórcio <span style="text-transform:none">(● comprou · ◆ planeja)</span></th><th style="width:36mm">Telefone · e-mail</th><th>Data</th><th>Falou com</th><th>Res.</th><th>Anotações / retorno</th></tr></thead><tbody>{rows}</tbody></table>''', 'Ligações'))
 
 # FONTES
 P.append(pg(f'''<p class="eb">Fontes e limites</p><h2 style="font-size:28pt; margin-top:2mm">De onde vêm os dados</h2>
