@@ -30,7 +30,9 @@ COMP = [x for x in COMP if not re.search(r'valor que se empenha', _n(x['objeto']
 comp_by = {}
 for x in sorted(COMP, key=lambda x: x['data'], reverse=True): comp_by.setdefault(x['cnpj'], []).append(x)
 plan_by = {}
-for x in PCA['itens']: plan_by.setdefault(x['cnpj'], []).append(x)
+for x in PCA['itens']:
+    if 'aparelho' in x['desc'].lower(): continue  # digitalizador de raio-x, não documento
+    plan_by.setdefault(x['cnpj'], []).append(x)
 pca_pub = {}
 for x in PCA['pcas']: pca_pub.setdefault(x['cnpj'], []).append(x['ano'])
 pca_lidos = {k[:-4] for k in PCA['feitos']}
@@ -209,10 +211,11 @@ resumo = f'''<p class="eb">Compras de digitalização</p><h2 style="font-size:26
   <div class="box" style="margin-top:5mm"><p><b>Como usar:</b> ligue primeiro para os consórcios marcados. Quem já comprou conhece o serviço e pode renovar ou ampliar; quem planejou tem verba prevista e ainda vai abrir a licitação. Os mesmos símbolos aparecem nas folhas de ligação.</p></div>'''
 bl = [bloco(c) for c in alvo]
 if not bl: bl = ['<div class="box" style="margin-top:6mm"><p>Nenhum consórcio da lista tem edital, ata ou plano com estes temas no PNCP.</p></div>']
-pg_now = [resumo]; cnt = 3
+pg_now = [resumo]; cnt = 4
 for b_ in bl:
-    if cnt >= 7: P.append(pg(''.join(pg_now), 'Compras')); pg_now = ['<p class="eb">Compras de digitalização (continuação)</p>']; cnt = 0
-    pg_now.append(b_); cnt += 1
+    w = 1 + b_.count('<tr>') * 0.55
+    if cnt + w > 9.5: P.append(pg(''.join(pg_now), 'Compras')); pg_now = ['<p class="eb">Compras de digitalização (continuação)</p>']; cnt = 0
+    pg_now.append(b_); cnt += w
 P.append(pg(''.join(pg_now), 'Compras'))
 
 # FOLHAS DE LIGAÇÃO
